@@ -7,6 +7,7 @@ import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.block.Block;
 import net.minecraft.common.block.Blocks;
+import net.minecraft.common.block.data.Material;
 import net.minecraft.common.block.data.Materials;
 import net.minecraft.common.entity.Entity;
 import net.minecraft.common.entity.animals.EntityAnimal;
@@ -290,11 +291,13 @@ public final class DilationCore extends Mod {
         EntityPlayerSP entityPlayerSP = minecraft.thePlayer;
         World world = minecraft.theWorld;
 
-        if (entityPlayerSP.isInWater() || entityPlayerSP.isInsideOfMaterial(Materials.LAVA)) {
+        if (entityPlayerSP.isInWater() || entityPlayerSP.isInsideOfMaterial(Materials.LAVA) || entityPlayerSP.isInsideOfMaterial(Materials.ACID) ||  entityPlayerSP.isInsideOfMaterial(Materials.SANGUIS)) {
             return false;
         }
 
-        if (world.getBlockMaterial(x, y, z) == Materials.LAVA) {
+        Material material = world.getBlockMaterial(x, y, z);
+
+        if (material == Materials.LAVA || material == Materials.ACID || material == Materials.SANGUIS) {
             return true;
         }
 
@@ -519,7 +522,7 @@ public final class DilationCore extends Mod {
     public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
 
     //Pages for gui... it's getting pretty long
-    //2 pages for now
+    //3 pages for now
     private int guiPage = 1;
 
     public int getGuiPage() {
@@ -575,14 +578,16 @@ public final class DilationCore extends Mod {
         //Jesus
         if (this.shouldJesus()) {
             boolean isInLava = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.LAVA);
+            boolean isInAcid = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.ACID);
+            boolean isInSanguis = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.SANGUIS);
 
-            if (Minecraft.getInstance().thePlayer.isInWater() || isInLava) {
+            if (Minecraft.getInstance().thePlayer.isInWater() || isInLava || isInSanguis || isInAcid) {
 
                 if (Minecraft.getInstance().currentScreen == null && Keyboard.isKeyDown(Minecraft.getInstance().gameSettings.keyBindSneak.keyCode)) {
                     return;
                 }
 
-                Minecraft.getInstance().thePlayer.motionY = isInLava ? 1.2d : 0.30d;
+                Minecraft.getInstance().thePlayer.motionY = (isInLava || isInAcid || isInSanguis) ? 1.2d : 0.30d;
             }
         }
 
