@@ -27,7 +27,7 @@ import java.util.*;
 public final class DilationCore extends Mod {
 
     //mod version
-    private final String version = "d0.3.1";
+    private final String version = "r0.3.1";
 
     public String getVersion() {
         return this.version;
