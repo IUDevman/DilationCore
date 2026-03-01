@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://cdn.fox2code.com/maven' }
+    }
+    dependencies {
+        classpath('com.fox2code.FoxLoader:dev:2.0-alpha36')
+    }
+}
+
+apply plugin: 'foxloader.dev'
+
+group = 'dev.hoosiers'
+version = 'r0.3.0'
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    from "LICENSE"
+}
+
+foxloader {
+    modId = "dilation"
+    modName = "DilationCore"
+    modIcon = "assets/dilation/icon.png"
+    modVersion = project.version
+    modAuthors = "Hoosiers"
+    modWebsite = "https://www.donaldjtrump.com/"
+    modMain = "dev.hoosiers.dilation.DilationCore"
+    modDesc("First public hacked client for ReIndev. Works on Multiplayer!")
+}

@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.hoosiers.dilation.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BlockFluidMixin",
+    "ChunkMixin",
+    "EntityPlayerMixin",
+    "EntityRendererManagerMixin",
+    "EntityRendererMixin",
+    "GameSettingsMixin",
+    "GuiIngameMixin",
+    "MinecraftMixin",
+    "NetClientHandlerMixin",
+    "RenderBlocksMixin",
+    "RenderGlobalMixin",
+    "TileEntityRenderManagerMixin",
+    "WorldInfoMixin",
+    "WorldMixin",
+    "WorldRendererMixin"
+  ]
+}
