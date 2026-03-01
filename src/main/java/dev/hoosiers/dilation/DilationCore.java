@@ -506,6 +506,7 @@ public final class DilationCore extends Mod {
         xrayBlocks.add(Blocks.INCINERATOR);
         xrayBlocks.add(Blocks.TOMBSTONE);
         xrayBlocks.add(Blocks.CUCURBOO_TOMBSTONE);
+        xrayBlocks.add(Blocks.PORTAL);
 
         return xrayBlocks;
     }
