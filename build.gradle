@@ -32,7 +32,7 @@ foxloader {
     modIcon = "assets/dilation/icon.png"
     modVersion = project.version
     modAuthors = "Hoosiers"
-    modWebsite = "https://www.donaldjtrump.com/"
+    modWebsite = "https://github.com/IUDevman/DilationCore"
     modMain = "dev.hoosiers.dilation.DilationCore"
     modDesc("First public hacked client for ReIndev. Works on Multiplayer!")
 }
