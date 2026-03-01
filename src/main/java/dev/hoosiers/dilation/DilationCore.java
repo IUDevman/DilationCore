@@ -27,7 +27,7 @@ import java.util.*;
 public final class DilationCore extends Mod {
 
     //mod version
-    private final String version = "r0.3.0";
+    private final String version = "d0.3.1";
 
     public String getVersion() {
         return this.version;
@@ -342,6 +342,11 @@ public final class DilationCore extends Mod {
     //check to see if we should attack an entity with KillAura.
     private boolean shouldAttackEntity(Entity entity) {
 
+        //Do not attack dead entities
+        if (!entity.isEntityAlive()) {
+            return false;
+        }
+
         if (this.shouldAttackPlayers() && entity instanceof EntityOtherPlayerMP) {
             return true;
         }
@@ -507,16 +512,16 @@ public final class DilationCore extends Mod {
 
     //@see GameSettingsMixin
     //Can change this eventually to a dedicated keybind manager... It doesn't look like we have to add these keybinds to the mixin for them to work.
-    public final KeyBinding keyBindingESP = new KeyBinding("key.ESP", Keyboard.KEY_K);
-    public final KeyBinding keyBindingFastBreak = new KeyBinding("key.fastBreak", Keyboard.KEY_L);
+    public final KeyBinding keyBindingESP = new KeyBinding("key.ESP", Keyboard.KEY_M);
+    public final KeyBinding keyBindingFastBreak = new KeyBinding("key.fastBreak", Keyboard.KEY_H);
     public final KeyBinding keyBindingFly = new KeyBinding("key.fly", Keyboard.KEY_G);
-    public final KeyBinding keyBindingNoFall = new KeyBinding("key.noFall", Keyboard.KEY_N);
-    public final KeyBinding keyBindingNoExhaustion = new KeyBinding("key.noExhaustion", Keyboard.KEY_M);
+    public final KeyBinding keyBindingNoFall = new KeyBinding("key.noFall", Keyboard.KEY_L);
+    public final KeyBinding keyBindingNoExhaustion = new KeyBinding("key.noExhaustion", Keyboard.KEY_K);
     public final KeyBinding keyBindingJesus = new KeyBinding("key.jesus", Keyboard.KEY_J);
-    public final KeyBinding keyBindingKillAura = new KeyBinding("key.killAura", Keyboard.KEY_O);
+    public final KeyBinding keyBindingKillAura = new KeyBinding("key.killAura", Keyboard.KEY_R);
     public final KeyBinding keyBindingFullbright = new KeyBinding("key.fullbright", Keyboard.KEY_B);
-    public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_H);
-    public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_P);
+    public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
+    public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
     public final KeyBinding keyBindingXray = new KeyBinding("key.xray", Keyboard.KEY_X);
     public final KeyBinding keyBindingPageLeft = new KeyBinding("key.pageLeft", Keyboard.KEY_LEFT);
     public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);

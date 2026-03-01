@@ -232,7 +232,7 @@ public final class NetClientHandlerMixin {
         String hostile = hostiles ? "§aHostiles" : "§cHostiles";
         String passive = passives ? "§aPassive" : "§cPassive";
 
-        String message = "[§bDilation§9Core§f] Set Killaura Setting " + param + "to §c" + paramValue + "§f(" + player + "§f/" + hostile + "§f/" + passive + "§f).";
+        String message = "[§bDilation§9Core§f] Set Killaura Setting " + param + " to §c" + paramValue + "§f(" + player + "§f/" + hostile + "§f/" + passive + "§f).";
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
     }

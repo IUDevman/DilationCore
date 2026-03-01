@@ -98,6 +98,12 @@ public final class RenderGlobalMixin {
             for (int i = 0; i < entlist.size(); i++) {
                 Entity var15 = entlist.get(i);
 
+                //Note: I've added this to try to prevent a weird rendering glitch if the player dies with ESP on.
+                //Without it, entity "shadows" will still be rendered and are stuck there unless relogged.
+                if (Minecraft.getInstance().thePlayer.isDead) {
+                    continue;
+                }
+
                 if (var15 == mc.renderViewEntity && this.mc.gameSettings.thirdPersonView == 0) {
                     continue;
                 }

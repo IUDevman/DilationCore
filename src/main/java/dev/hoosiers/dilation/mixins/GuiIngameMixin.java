@@ -63,8 +63,8 @@ public final class GuiIngameMixin {
         String pageString = "";
 
         if (dilationCore.getGuiPage() == 1) {
-            guiIngame.drawString(minecraft.fontRenderer, "> ESP (-e) [K]", minX +  2, minY + 14, dilationCore.shouldESP() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, ">> FastBreak (-fab) [L]", minX + 2, minY + 24, dilationCore.shouldFastBreak() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "> ESP (-e) [M]", minX +  2, minY + 14, dilationCore.shouldESP() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, ">> FastBreak (-fab) [H]", minX + 2, minY + 24, dilationCore.shouldFastBreak() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "> Fly (-f) [G]", minX +  2, minY + 34, dilationCore.shouldFly() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, ">> Fullbright (-fb) [B]", minX +  2, minY + 44, dilationCore.shouldFullbright() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "> Jesus (-j) [J]", minX +  2, minY + 54, dilationCore.shouldJesus() ? Color.GREEN.getRGB() : Color.RED.getRGB());
@@ -73,11 +73,11 @@ public final class GuiIngameMixin {
         }
 
         if (dilationCore.getGuiPage() == 2) {
-            guiIngame.drawString(minecraft.fontRenderer, "> KillAura (-ka) [O]", minX + 2, minY + 14, dilationCore.shouldKillAura() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, ">> NoExhaustion (-ne) [M]", minX + 2, minY + 24, dilationCore.shouldNoExhaustion() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, "> NoFall (-nf) [N]", minX + 2, minY + 34, dilationCore.shouldNoFall() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, ">> NoWeather (-nw) [H]", minX + 2, minY + 44, dilationCore.shouldNoWeather() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, "> Tracers (-t) [P]", minX + 2, minY + 54, dilationCore.shouldTracers() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "> KillAura (-ka) [R]", minX + 2, minY + 14, dilationCore.shouldKillAura() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, ">> NoExhaustion (-ne) [K]", minX + 2, minY + 24, dilationCore.shouldNoExhaustion() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "> NoFall (-nf) [L]", minX + 2, minY + 34, dilationCore.shouldNoFall() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, ">> NoWeather (-nw) [N]", minX + 2, minY + 44, dilationCore.shouldNoWeather() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "> Tracers (-t) [COMMA]", minX + 2, minY + 54, dilationCore.shouldTracers() ? Color.GREEN.getRGB() : Color.RED.getRGB());
 
             pageString = "(2/3)";
         }

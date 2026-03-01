@@ -9,7 +9,6 @@
     "EntityPlayerMixin",
     "EntityRendererManagerMixin",
     "EntityRendererMixin",
-    "GameSettingsMixin",
     "GuiIngameMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
