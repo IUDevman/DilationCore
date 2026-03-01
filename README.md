@@ -24,8 +24,6 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 
 **Images:**
 
-<img width="2560" height="1440" alt="R1" src="https://github.com/user-attachments/assets/21315917-afd5-4369-b105-7896ce0a5b62" />
+<img width="2560" height="1440" alt="R1" src="https://github.com/user-attachments/assets/22932dd4-1580-4ed8-9921-067d2c318c2e" />
 
-<img width="2560" height="1440" alt="R2" src="https://github.com/user-attachments/assets/4338e82a-b9a3-4880-8bb9-de1b4f1a0069" />
-
-<img width="2560" height="1440" alt="R3" src="https://github.com/user-attachments/assets/9f921ca2-e75d-4472-bf74-fb0621d1e6a2" />
+<img width="2560" height="1440" alt="R2" src="https://github.com/user-attachments/assets/fd5bd966-34d8-4360-889e-3684d1e6387a" />
