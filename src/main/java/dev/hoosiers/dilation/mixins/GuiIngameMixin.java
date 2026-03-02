@@ -87,13 +87,13 @@ public final class GuiIngameMixin {
             guiIngame.drawString(minecraft.fontRenderer, "-flight [speed] (3-20)", minX + 2, minY + 24, Color.CYAN.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "-killaura [range] (0-10)", minX + 2, minY + 34, Color.CYAN.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "-killaura [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 44, Color.CYAN.getRGB());
-            guiIngame.drawString(minecraft.fontRenderer, "-xdo (Xray Diamonds Only)", minX + 2, minY + 54, Color.CYAN.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "-t portals (Tracer Portals)", minX + 2, minY + 54, Color.CYAN.getRGB());
 
             pageString = "(3/4)";
         }
 
         if (dilationCore.getGuiPage() == 4) {
-            guiIngame.drawString(minecraft.fontRenderer, "-t portals (Tracer Portals)", minX + 2, minY + 14, Color.CYAN.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "-xdo (Xray Diamonds Only)", minX + 2, minY + 14, Color.CYAN.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "-tm (Toggle Module MSGs)", minX + 2, minY + 24, Color.CYAN.getRGB());
 
             pageString = "(4/4)";
