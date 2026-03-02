@@ -534,7 +534,7 @@ public final class DilationCore extends Mod {
 
                         double distanceSquared = Math.sqrt(x) + Math.sqrt(y) + Math.sqrt(z);
 
-                        if (torchNukerRangeSquared <= distanceSquared) {
+                        if (torchNukerRangeSquared < distanceSquared) {
                             continue;
                         }
 
