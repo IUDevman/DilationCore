@@ -521,7 +521,7 @@ public final class DilationCore extends Mod {
             int eY = (int) Minecraft.getInstance().thePlayer.posY;
             int eZ = (int) Minecraft.getInstance().thePlayer.posZ;
 
-            double torchNukerRangeSquared = Math.sqrt(this.getTorchNukerRange());
+            double torchNukerRangeSquared = Math.pow(this.getTorchNukerRange(), this.getTorchNukerRange());
 
             ArrayList<Vector4f> torchCoordinates = new ArrayList<>();
 
@@ -532,7 +532,7 @@ public final class DilationCore extends Mod {
                 for (int y = -this.getTorchNukerRange(); y <= this.getTorchNukerRange(); y++) {
                     for (int z = -this.getTorchNukerRange(); z<= this.getTorchNukerRange(); z++) {
 
-                        double distanceSquared = Math.sqrt(x) + Math.sqrt(y) + Math.sqrt(z);
+                        double distanceSquared = Math.pow(x, x) + Math.pow(y, y) + Math.pow(z, z);
 
                         if (torchNukerRangeSquared < distanceSquared) {
                             continue;
