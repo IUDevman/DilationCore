@@ -1,4 +1,4 @@
-package dev.hoosiers.dilation.misc;
+package dev.hoosiers.dilation.utils;
 
 import net.minecraft.common.block.tileentity.TileEntity;
 

@@ -2,7 +2,7 @@ package dev.hoosiers.dilation.mixins;
 
 import com.indigo3d.util.DisplayLists;
 import dev.hoosiers.dilation.DilationCore;
-import dev.hoosiers.dilation.misc.TileEntityDummy;
+import dev.hoosiers.dilation.utils.TileEntityDummy;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.world.RenderBlocks;
 import net.minecraft.client.renderer.world.Tessellator;

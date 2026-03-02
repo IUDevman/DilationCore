@@ -1,4 +1,4 @@
-package dev.hoosiers.dilation.misc;
+package dev.hoosiers.dilation.utils;
 
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.player.EntityOtherPlayerMP;

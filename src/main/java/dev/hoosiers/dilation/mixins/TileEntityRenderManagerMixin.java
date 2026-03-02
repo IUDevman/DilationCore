@@ -1,17 +1,12 @@
 package dev.hoosiers.dilation.mixins;
 
-import com.indigo3d.util.RenderSystem;
 import dev.hoosiers.dilation.DilationCore;
-import dev.hoosiers.dilation.misc.RenderMethods;
-import dev.hoosiers.dilation.misc.TileEntityDummy;
+import dev.hoosiers.dilation.utils.RenderMethods;
+import dev.hoosiers.dilation.utils.TileEntityDummy;
 import net.minecraft.client.renderer.block.tileentity.TileEntityRenderManager;
-import net.minecraft.client.renderer.world.Tessellator;
 import net.minecraft.common.block.Blocks;
 import net.minecraft.common.block.tileentity.*;
-import net.minecraft.common.util.math.AxisAlignedBB;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

@@ -1,21 +1,12 @@
 package dev.hoosiers.dilation.mixins;
 
-import com.indigo3d.util.RenderSystem;
 import dev.hoosiers.dilation.DilationCore;
-import dev.hoosiers.dilation.misc.RenderMethods;
+import dev.hoosiers.dilation.utils.RenderMethods;
 import net.minecraft.client.player.EntityClientPlayerMP;
 import net.minecraft.client.player.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.world.Tessellator;
 import net.minecraft.common.entity.Entity;
-import net.minecraft.common.entity.animals.EntityAnimal;
-import net.minecraft.common.entity.monsters.EntityMonster;
-import net.minecraft.common.entity.monsters.EntitySlime;
 import net.minecraft.common.entity.other.EntityAreaEffectCloud;
-import net.minecraft.common.entity.other.EntityItem;
-import net.minecraft.common.entity.other.EntityItemFireResistant;
-import net.minecraft.common.util.math.AxisAlignedBB;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

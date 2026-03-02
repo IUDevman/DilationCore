@@ -1,7 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
-import dev.hoosiers.dilation.misc.XrayBlocks;
+import dev.hoosiers.dilation.utils.XrayBlocks;
 import net.minecraft.client.renderer.world.RenderBlocks;
 import net.minecraft.common.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
