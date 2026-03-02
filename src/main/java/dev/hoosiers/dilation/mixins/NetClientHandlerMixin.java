@@ -104,12 +104,6 @@ public final class NetClientHandlerMixin {
                 return;
             }
 
-            if (message.equals("-tracer") || message.equals("-tracers") || message.equals("-t")) {
-                dilationCore.toggleTracers();
-                ci.cancel();
-                return;
-            }
-
             if (message.equals("-xray") || message.equals("-x")) {
                 dilationCore.toggleXray();
                 ci.cancel();
@@ -118,6 +112,26 @@ public final class NetClientHandlerMixin {
 
             //put this last as it has statements that can override fullbright.
             String[] messages = message.split(" ");
+
+            if (messages[0].equals("-tracer") || messages[0].equals("-tracers") || messages[0].equals("-t")) {
+
+                if (messages.length == 1) {
+                    dilationCore.toggleTracers();
+                    ci.cancel();
+                    return;
+                }
+
+                String value = messages[1].toLowerCase();
+
+                if (value.equals("portals") || value.equals("portal")) {
+                    boolean shouldTracersPortalsNew = !dilationCore.shouldTracersPortals();
+
+                    dilationCore.setShouldTracersPortals(shouldTracersPortalsNew);
+                    dilationCore$sendTracersToggleMessage(shouldTracersPortalsNew);
+                    ci.cancel();
+                    return;
+                }
+            }
 
             if (messages[0].equals("-killaura") || messages[0].equals("-aura") || messages[0].equals("-ka") || messages[0].equals("-k")) {
 
@@ -221,6 +235,19 @@ public final class NetClientHandlerMixin {
             message = "[§bDilation§9Core§f] Set Xray Diamonds Only Setting To §aTrue§f!";
         } else {
             message = "[§bDilation§9Core§f] Set Xray Diamonds Only Setting To §cFalse§f!";
+        }
+
+        Minecraft.getInstance().thePlayer.addChatMessage(message);
+    }
+
+    @Unique
+    private void dilationCore$sendTracersToggleMessage(boolean portals) {
+        String message = "";
+
+        if (portals) {
+            message = "[§bDilation§9Core§f] Set Tracers Draw to Portals Setting To §aTrue§f!";
+        } else {
+            message = "[§bDilation§9Core§f] Set Tracers Draw to Portals Setting To §cFalse§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);

@@ -194,7 +194,7 @@ public abstract class WorldRendererMixin {
 
                                 //Turn desired blocks into dummy tile entities.
                                 if (dilationCore$shouldMakeDummyFor(this.worldObj.getBlockId(x, y, z))) {
-                                    TileEntityDummy tileEntityDummy = new TileEntityDummy();
+                                    TileEntityDummy tileEntityDummy = new TileEntityDummy(blockid);
 
                                     tileEntityDummy.xCoord = x;
                                     tileEntityDummy.yCoord = y;
@@ -289,6 +289,10 @@ public abstract class WorldRendererMixin {
         }
 
         if (id == Blocks.BED.blockID) {
+            return true;
+        }
+
+        if (id == Blocks.PORTAL.blockID) {
             return true;
         }
 

@@ -27,7 +27,7 @@ import java.util.*;
 public final class DilationCore extends Mod {
 
     //mod version
-    private final String version = "r0.3.1";
+    private final String version = "d0.4.0";
 
     public String getVersion() {
         return this.version;
@@ -207,6 +207,16 @@ public final class DilationCore extends Mod {
         }
 
         this.auraRange = newAuraRange;
+    }
+
+    private boolean shouldTracersPortals = false;
+
+    public boolean shouldTracersPortals() {
+        return this.shouldTracersPortals;
+    }
+
+    public void setShouldTracersPortals(boolean shouldTracersPortals) {
+        this.shouldTracersPortals = shouldTracersPortals;
     }
 
     //checks to see if the player or world is not loaded.
@@ -528,7 +538,7 @@ public final class DilationCore extends Mod {
     public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
 
     //Pages for gui... it's getting pretty long
-    //3 pages for now
+    //4 pages for now
     private int guiPage = 1;
 
     public int getGuiPage() {
@@ -540,8 +550,8 @@ public final class DilationCore extends Mod {
             newGuiPage = 1;
         }
 
-        if (newGuiPage > 3) {
-            newGuiPage = 3;
+        if (newGuiPage > 4) {
+            newGuiPage = 4;
         }
 
         this.guiPage = newGuiPage;
@@ -792,6 +802,10 @@ public final class DilationCore extends Mod {
                         this.toggleTracers();
                     }
 
+                    if (entry0.equals("PortalsT")) {
+                        this.setShouldTracersPortals(Boolean.parseBoolean(entry1));
+                    }
+
                     if (entry0.equals("Xray") && Boolean.parseBoolean(entry1)) {
                         this.toggleXray();
                     }
@@ -842,6 +856,7 @@ public final class DilationCore extends Mod {
             printWriter.println("NoFall:" + this.shouldNoFall());
             printWriter.println("NoWeather:" + this.shouldNoWeather());
             printWriter.println("Tracers:" + this.shouldTracers());
+            printWriter.println("PortalsT:" + this.shouldTracersPortals());
             printWriter.println("Xray:" + this.shouldXray());
             printWriter.println("DiamondsOnlyX:" + this.isDiamondsOnly());
             printWriter.println("GUIPage:" + this.getGuiPage());

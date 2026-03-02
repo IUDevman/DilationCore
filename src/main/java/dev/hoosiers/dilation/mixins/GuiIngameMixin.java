@@ -69,7 +69,7 @@ public final class GuiIngameMixin {
             guiIngame.drawString(minecraft.fontRenderer, ">> Fullbright (-fb) [B]", minX +  2, minY + 44, dilationCore.shouldFullbright() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "> Jesus (-j) [J]", minX +  2, minY + 54, dilationCore.shouldJesus() ? Color.GREEN.getRGB() : Color.RED.getRGB());
 
-            pageString = "(1/3)";
+            pageString = "(1/4)";
         }
 
         if (dilationCore.getGuiPage() == 2) {
@@ -79,7 +79,7 @@ public final class GuiIngameMixin {
             guiIngame.drawString(minecraft.fontRenderer, ">> NoWeather (-nw) [N]", minX + 2, minY + 44, dilationCore.shouldNoWeather() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "> Tracers (-t) [COMMA]", minX + 2, minY + 54, dilationCore.shouldTracers() ? Color.GREEN.getRGB() : Color.RED.getRGB());
 
-            pageString = "(2/3)";
+            pageString = "(2/4)";
         }
 
         if (dilationCore.getGuiPage() == 3) {
@@ -89,7 +89,14 @@ public final class GuiIngameMixin {
             guiIngame.drawString(minecraft.fontRenderer, "-killaura [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 44, Color.CYAN.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "-xdo (Xray Diamonds Only)", minX + 2, minY + 54, Color.CYAN.getRGB());
 
-            pageString = "(3/3)";
+            pageString = "(3/4)";
+        }
+
+        if (dilationCore.getGuiPage() == 4) {
+            guiIngame.drawString(minecraft.fontRenderer, "-t portals (Draw Portals)", minX + 2, minY + 14, Color.CYAN.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "-tm (Toggle Module MSGs)", minX + 2, minY + 24, Color.CYAN.getRGB());
+
+            pageString = "(4/4)";
         }
 
         int pageX = minecraft.fontRenderer.getStringWidth(dilationCoreMessage) - minecraft.fontRenderer.getStringWidth(pageString);

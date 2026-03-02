@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'foxloader.dev'
 
 group = 'dev.hoosiers'
-version = 'r0.3.1'
+version = 'd0.4.0'
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
