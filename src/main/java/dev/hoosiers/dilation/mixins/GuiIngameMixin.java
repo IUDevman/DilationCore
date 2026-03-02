@@ -93,7 +93,7 @@ public final class GuiIngameMixin {
         }
 
         if (dilationCore.getGuiPage() == 4) {
-            guiIngame.drawString(minecraft.fontRenderer, "-t portals (Draw Portals)", minX + 2, minY + 14, Color.CYAN.getRGB());
+            guiIngame.drawString(minecraft.fontRenderer, "-t portals (Tracer Portals)", minX + 2, minY + 14, Color.CYAN.getRGB());
             guiIngame.drawString(minecraft.fontRenderer, "-tm (Toggle Module MSGs)", minX + 2, minY + 24, Color.CYAN.getRGB());
 
             pageString = "(4/4)";
