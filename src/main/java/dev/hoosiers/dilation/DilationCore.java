@@ -560,14 +560,10 @@ public final class DilationCore extends Mod {
                 //find the closest torch
                 Vector4f vector4fX = torchCoordinates.stream().min(Comparator.comparing(vector4f -> vector4f.w)).orElse(null);
 
-                Minecraft.getInstance().getLogger().info("Found torch at " + vector4fX);
-
                 //Crashes in singleplayer without this
                 if (!Minecraft.getInstance().theWorld.isRemote) {
                     return;
                 }
-
-                Minecraft.getInstance().getLogger().info("Tried to break " + vector4fX);
 
                 //break torch
                 Minecraft.getInstance().getSendQueue().addToSendQueue(new Packet14BlockDig(0, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
