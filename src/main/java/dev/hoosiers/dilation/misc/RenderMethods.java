@@ -13,7 +13,6 @@ import net.minecraft.common.entity.other.EntityItem;
 import net.minecraft.common.entity.other.EntityItemFireResistant;
 import net.minecraft.common.util.math.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.awt.*;
 

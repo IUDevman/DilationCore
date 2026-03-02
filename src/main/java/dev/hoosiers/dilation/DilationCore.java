@@ -5,8 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.EntityOtherPlayerMP;
 import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.util.KeyBinding;
-import net.minecraft.common.block.Block;
-import net.minecraft.common.block.Blocks;
 import net.minecraft.common.block.data.Material;
 import net.minecraft.common.block.data.Materials;
 import net.minecraft.common.entity.Entity;
@@ -25,13 +23,6 @@ import java.util.*;
  */
 
 public final class DilationCore extends Mod {
-
-    //mod version
-    private final String version = "d0.4.0";
-
-    public String getVersion() {
-        return this.version;
-    }
 
     //mod instance
     private static DilationCore INSTANCE;
@@ -52,6 +43,13 @@ public final class DilationCore extends Mod {
         loadConfiguration();
     }
 
+    //mod version
+    private final String version = "d0.4.0";
+
+    public String getVersion() {
+        return this.version;
+    }
+
     //shittiest way to do it, but I can't be damned to spend time making a griefing client instead of just griefing.
     private boolean shouldESP = false;
     private boolean shouldFastBreak = false;
@@ -64,9 +62,6 @@ public final class DilationCore extends Mod {
     private boolean shouldNoWeather = false;
     private boolean shouldTracers = false;
     private boolean shouldXray = false;
-
-    private int flightSpeed = 5;
-    private int auraRange = 7;
 
     public boolean shouldESP() {
         return this.shouldESP;
@@ -170,6 +165,8 @@ public final class DilationCore extends Mod {
         this.sendChatToggleMessage("Xray", this.shouldXray());
     }
 
+    private int flightSpeed = 5;
+
     public int getFlightSpeed() {
         return this.flightSpeed;
     }
@@ -189,6 +186,8 @@ public final class DilationCore extends Mod {
 
         this.flightSpeed = newFlightSpeed;
     }
+
+    private int auraRange = 7;
 
     public int getAuraRange() {
         return this.auraRange;
@@ -219,16 +218,73 @@ public final class DilationCore extends Mod {
         this.shouldTracersPortals = shouldTracersPortals;
     }
 
-    //checks to see if the player or world is not loaded.
-    //very important to not load things if their dependencies are not loaded.
-    public boolean failsNullCheck() {
-        Minecraft minecraft = Minecraft.getInstance();
+    //secret
+    private boolean players = true;
 
-        if (minecraft == null || minecraft.thePlayer == null || minecraft.theWorld == null) {
+    private boolean hostiles = true;
+
+    private boolean animals = true;
+
+    public boolean shouldAttackPlayers() {
+        return this.players;
+    }
+
+    public boolean shouldAttackHostiles() {
+        return this.hostiles;
+    }
+
+    public boolean shouldAttackAnimals() {
+        return this.animals;
+    }
+
+    public void setAttackPlayers(boolean attackPlayers) {
+        this.players = attackPlayers;
+    }
+
+    public void setAttackHostiles(boolean attackHostiles) {
+        this.hostiles = attackHostiles;
+    }
+
+    public void setAttackAnimals(boolean attackPassive) {
+        this.animals = attackPassive;
+    }
+
+    //Check to see if we should attack an entity with KillAura.
+    private boolean shouldAttackEntity(Entity entity) {
+
+        //Do not attack dead entities
+        if (!entity.isEntityAlive()) {
+            return false;
+        }
+
+        if (this.shouldAttackPlayers() && entity instanceof EntityOtherPlayerMP) {
+            return true;
+        }
+
+        if (this.shouldAttackHostiles() && (entity instanceof EntityMonster || entity instanceof EntitySlime)) {
+            return true;
+        }
+
+        if (this.shouldAttackAnimals() && entity instanceof EntityAnimal) {
             return true;
         }
 
         return false;
+    }
+
+    //Diamonds only mode for Xray.
+    private boolean diamondsOnly = false;
+
+    public boolean isDiamondsOnly()  {
+        return this.diamondsOnly;
+    }
+
+    public void setDiamondsOnly(boolean diamondsOnly)  {
+        this.diamondsOnly = diamondsOnly;
+
+        if (this.shouldXray()) {
+            this.fullbrightCleanUp();
+        }
     }
 
     private boolean shouldSendToggleMessages = true;
@@ -283,260 +339,6 @@ public final class DilationCore extends Mod {
         }
     }
 
-    //resets world render when changing brightness
-    private void fullbrightCleanUp() {
-
-        if (this.failsNullCheck()) {
-            return;
-        }
-
-        Minecraft.getInstance().renderGlobal.updateRenderers(Minecraft.getInstance().thePlayer, Minecraft.getSystemTime());
-        Minecraft.getInstance().renderGlobal.loadRenderers();
-    }
-
-    //checks to see if certain conditions are present that could harm the player if jesus is on.
-    public boolean shouldJesus(int x, int y, int z) {
-
-        Minecraft minecraft = Minecraft.getInstance();
-        EntityPlayerSP entityPlayerSP = minecraft.thePlayer;
-        World world = minecraft.theWorld;
-
-        if (entityPlayerSP.isInWater() || entityPlayerSP.isInsideOfMaterial(Materials.LAVA) || entityPlayerSP.isInsideOfMaterial(Materials.ACID) ||  entityPlayerSP.isInsideOfMaterial(Materials.SANGUIS)) {
-            return false;
-        }
-
-        Material material = world.getBlockMaterial(x, y, z);
-
-        if (material == Materials.LAVA || material == Materials.ACID || material == Materials.SANGUIS) {
-            return true;
-        }
-
-        if (minecraft.currentScreen == null && Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.keyCode)) {
-            return false;
-        }
-
-        return !(entityPlayerSP.fallDistance >= 3);
-    }
-
-    //secret
-    private boolean players = true;
-
-    private boolean hostiles = true;
-
-    private boolean animals = true;
-
-    public boolean shouldAttackPlayers() {
-        return this.players;
-    }
-
-    public boolean shouldAttackHostiles() {
-        return this.hostiles;
-    }
-
-    public boolean shouldAttackAnimals() {
-        return this.animals;
-    }
-
-    public void setAttackPlayers(boolean attackPlayers) {
-        this.players = attackPlayers;
-    }
-
-    public void setAttackHostiles(boolean attackHostiles) {
-        this.hostiles = attackHostiles;
-    }
-
-    public void setAttackAnimals(boolean attackPassive) {
-        this.animals = attackPassive;
-    }
-
-    //check to see if we should attack an entity with KillAura.
-    private boolean shouldAttackEntity(Entity entity) {
-
-        //Do not attack dead entities
-        if (!entity.isEntityAlive()) {
-            return false;
-        }
-
-        if (this.shouldAttackPlayers() && entity instanceof EntityOtherPlayerMP) {
-            return true;
-        }
-
-        if (this.shouldAttackHostiles() && (entity instanceof EntityMonster || entity instanceof EntitySlime)) {
-            return true;
-        }
-
-        if (this.shouldAttackAnimals() && entity instanceof EntityAnimal) {
-            return true;
-        }
-
-        return false;
-    }
-
-    //secret diamonds only mode for Xray.
-    private boolean diamondsOnly = false;
-
-    public boolean isDiamondsOnly()  {
-        return this.diamondsOnly;
-    }
-
-    public void setDiamondsOnly(boolean diamondsOnly)  {
-        this.diamondsOnly = diamondsOnly;
-
-        if (this.shouldXray()) {
-            this.fullbrightCleanUp();
-        }
-    }
-
-    //@see RenderBlocksMixin
-    //returns list of blocks to >> NOT << hide when Xray is enabled.
-    public ArrayList<Block> getXrayBlocks() {
-        ArrayList<Block> xrayBlocks = new ArrayList<>();
-
-        if (this.isDiamondsOnly()) {
-            xrayBlocks.add(Blocks.DIAMOND_BLOCK);
-            xrayBlocks.add(Blocks.DIAMOND_ORE);
-            xrayBlocks.add(Blocks.NETHER_DIAMOND_ORE);
-            xrayBlocks.add(Blocks.LAVA_MOVING);
-            xrayBlocks.add(Blocks.LAVA_STILL);
-            xrayBlocks.add(Blocks.WATER_STILL);
-            xrayBlocks.add(Blocks.WATER_MOVING);
-            xrayBlocks.add(Blocks.ACID_MOVING);
-            xrayBlocks.add(Blocks.ACID_STILL);
-            xrayBlocks.add(Blocks.SANGUIS_MOVING);
-            xrayBlocks.add(Blocks.SANGUIS_STILL);
-            xrayBlocks.add(Blocks.QUICKSAND);
-
-            return xrayBlocks;
-        }
-
-        xrayBlocks.add(Blocks.CRAFTING_TABLE);
-        xrayBlocks.add(Blocks.FURNACE_IDLE);
-        xrayBlocks.add(Blocks.FURNACE_ACTIVE);
-        xrayBlocks.add(Blocks.CHEST);
-        xrayBlocks.add(Blocks.COLORED_CHEST);
-        xrayBlocks.add(Blocks.DIMENSIONAL_CHEST);
-        xrayBlocks.add(Blocks.CRATE);
-        xrayBlocks.add(Blocks.COLORED_CRATE);
-        xrayBlocks.add(Blocks.BED);
-        xrayBlocks.add(Blocks.TORCH);
-        xrayBlocks.add(Blocks.JET_TORCH);
-        xrayBlocks.add(Blocks.CITRINE_TORCH);
-        xrayBlocks.add(Blocks.MYTHRIL_TORCH);
-        xrayBlocks.add(Blocks.QUARTZ_TORCH);
-        xrayBlocks.add(Blocks.STICKY_TORCH);
-        xrayBlocks.add(Blocks.REDSTONE_TORCH_IDLE);
-        xrayBlocks.add(Blocks.REDSTONE_TORCH_ACTIVE);
-        xrayBlocks.add(Blocks.CARPENTRY_TABLE);
-        xrayBlocks.add(Blocks.CAULDRON);
-        xrayBlocks.add(Blocks.TILLED_FIELD);
-        xrayBlocks.add(Blocks.CARROT_CROPS);
-        xrayBlocks.add(Blocks.CORN_CROPS);
-        xrayBlocks.add(Blocks.MINT_CROPS);
-        xrayBlocks.add(Blocks.WHEAT_CROPS);
-        xrayBlocks.add(Blocks.POTATO_CROPS);
-        xrayBlocks.add(Blocks.CORN_COB_BLOCK);
-        xrayBlocks.add(Blocks.POPCORN_BLOCK);
-        xrayBlocks.add(Blocks.BUNDLE_OF_MINT);
-        xrayBlocks.add(Blocks.CHEESE_WHEEL);
-        xrayBlocks.add(Blocks.GLOWSTONE);
-        xrayBlocks.add(Blocks.BEACON);
-        xrayBlocks.add(Blocks.COAL_BLOCK);
-        xrayBlocks.add(Blocks.COAL_ORE);
-        xrayBlocks.add(Blocks.NETHER_COAL_ORE);
-        xrayBlocks.add(Blocks.IRON_BLOCK);
-        xrayBlocks.add(Blocks.IRON_ORE);
-        xrayBlocks.add(Blocks.NETHER_IRON_ORE);
-        xrayBlocks.add(Blocks.GOLD_BLOCK);
-        xrayBlocks.add(Blocks.GOLD_ORE);
-        xrayBlocks.add(Blocks.NETHER_GOLD_ORE);
-        xrayBlocks.add(Blocks.DIAMOND_BLOCK);
-        xrayBlocks.add(Blocks.DIAMOND_ORE);
-        xrayBlocks.add(Blocks.NETHER_DIAMOND_ORE);
-        xrayBlocks.add(Blocks.LAPIS_BLOCK);
-        xrayBlocks.add(Blocks.AUGMENTITE_ORE);
-        xrayBlocks.add(Blocks.AUGMENTITE_BLOCK);
-        xrayBlocks.add(Blocks.GEAR);
-        xrayBlocks.add(Blocks.GEAR_RELAY_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_RELAY_IDLE);
-        xrayBlocks.add(Blocks.GEAR_WAIT_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_WAIT_IDLE);
-        xrayBlocks.add(Blocks.GEAR_AND_GATE_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_AND_GATE_IDLE);
-        xrayBlocks.add(Blocks.GEAR_NOT_GATE_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_NOT_GATE_IDLE);
-        xrayBlocks.add(Blocks.GEAR_OR_GATE_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_OR_GATE_IDLE);
-        xrayBlocks.add(Blocks.GEAR_XOR_GATE_ACTIVE);
-        xrayBlocks.add(Blocks.GEAR_XOR_GATE_IDLE);
-        xrayBlocks.add(Blocks.COMBUSTOR_ACTIVE);
-        xrayBlocks.add(Blocks.COMBUSTOR_IDLE);
-        xrayBlocks.add(Blocks.HONEYCOMB_BLOCK);
-        xrayBlocks.add(Blocks.FIRE);
-        xrayBlocks.add(Blocks.LAVA_MOVING);
-        xrayBlocks.add(Blocks.LAVA_STILL);
-        xrayBlocks.add(Blocks.WATER_STILL);
-        xrayBlocks.add(Blocks.WATER_MOVING);
-        xrayBlocks.add(Blocks.ACID_MOVING);
-        xrayBlocks.add(Blocks.ACID_STILL);
-        xrayBlocks.add(Blocks.SANGUIS_MOVING);
-        xrayBlocks.add(Blocks.SANGUIS_STILL);
-        xrayBlocks.add(Blocks.QUICKSAND);
-        xrayBlocks.add(Blocks.PUMPKIN);
-        xrayBlocks.add(Blocks.PUMPKIN_STEM);
-        xrayBlocks.add(Blocks.WATERLILY);
-        xrayBlocks.add(Blocks.BLUE_WATERLILY);
-        xrayBlocks.add(Blocks.YELLOW_WATERLILY);
-        xrayBlocks.add(Blocks.LILYPAD);
-        xrayBlocks.add(Blocks.WATERMELON);
-        xrayBlocks.add(Blocks.WATERMELON_STEM);
-        xrayBlocks.add(Blocks.QUARTZ);
-        xrayBlocks.add(Blocks.LEVER);
-        xrayBlocks.add(Blocks.MOB_SPAWNER);
-        xrayBlocks.add(Blocks.TNT);
-        xrayBlocks.add(Blocks.JUKEBOX);
-        xrayBlocks.add(Blocks.PISTON_BASE);
-        xrayBlocks.add(Blocks.PISTON_EXTENSION);
-        xrayBlocks.add(Blocks.PISTON_MOVING);
-        xrayBlocks.add(Blocks.PISTON_STICKY_BASE);
-        xrayBlocks.add(Blocks.MOTOR_ACTIVE);
-        xrayBlocks.add(Blocks.MOTOR_IDLE);
-        xrayBlocks.add(Blocks.RAIL);
-        xrayBlocks.add(Blocks.DETECTOR_RAIL);
-        xrayBlocks.add(Blocks.POWERED_RAIL);
-        xrayBlocks.add(Blocks.CONVEYOR_BELT_ACTIVE);
-        xrayBlocks.add(Blocks.CONVEYOR_BELT_IDLE);
-        xrayBlocks.add(Blocks.SUGAR_CANE);
-        xrayBlocks.add(Blocks.SIGN_POST);
-        xrayBlocks.add(Blocks.WALL_SIGN);
-        xrayBlocks.add(Blocks.FORGE_ACTIVE);
-        xrayBlocks.add(Blocks.FORGE_IDLE);
-        xrayBlocks.add(Blocks.ARTIFICIAL_HIVE);
-        xrayBlocks.add(Blocks.REFRIDGIFREEZER_ACTIVE);
-        xrayBlocks.add(Blocks.REFRIDGIFREEZER_IDLE);
-        xrayBlocks.add(Blocks.INCINERATOR);
-        xrayBlocks.add(Blocks.TOMBSTONE);
-        xrayBlocks.add(Blocks.CUCURBOO_TOMBSTONE);
-        xrayBlocks.add(Blocks.PORTAL);
-
-        return xrayBlocks;
-    }
-
-    //@see GameSettingsMixin
-    //Can change this eventually to a dedicated keybind manager... It doesn't look like we have to add these keybinds to the mixin for them to work.
-    public final KeyBinding keyBindingESP = new KeyBinding("key.ESP", Keyboard.KEY_M);
-    public final KeyBinding keyBindingFastBreak = new KeyBinding("key.fastBreak", Keyboard.KEY_H);
-    public final KeyBinding keyBindingFly = new KeyBinding("key.fly", Keyboard.KEY_G);
-    public final KeyBinding keyBindingNoFall = new KeyBinding("key.noFall", Keyboard.KEY_L);
-    public final KeyBinding keyBindingNoExhaustion = new KeyBinding("key.noExhaustion", Keyboard.KEY_K);
-    public final KeyBinding keyBindingJesus = new KeyBinding("key.jesus", Keyboard.KEY_J);
-    public final KeyBinding keyBindingKillAura = new KeyBinding("key.killAura", Keyboard.KEY_R);
-    public final KeyBinding keyBindingFullbright = new KeyBinding("key.fullbright", Keyboard.KEY_B);
-    public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
-    public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
-    public final KeyBinding keyBindingXray = new KeyBinding("key.xray", Keyboard.KEY_X);
-    public final KeyBinding keyBindingPageLeft = new KeyBinding("key.pageLeft", Keyboard.KEY_LEFT);
-    public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
-
     //Pages for gui... it's getting pretty long
     //4 pages for now
     private int guiPage = 1;
@@ -556,6 +358,22 @@ public final class DilationCore extends Mod {
 
         this.guiPage = newGuiPage;
     }
+
+    //@see GameSettingsMixin
+    //Can change this eventually to a dedicated keybind manager... It doesn't look like we have to add these keybinds to the mixin for them to work.
+    public final KeyBinding keyBindingESP = new KeyBinding("key.ESP", Keyboard.KEY_M);
+    public final KeyBinding keyBindingFastBreak = new KeyBinding("key.fastBreak", Keyboard.KEY_H);
+    public final KeyBinding keyBindingFly = new KeyBinding("key.fly", Keyboard.KEY_G);
+    public final KeyBinding keyBindingNoFall = new KeyBinding("key.noFall", Keyboard.KEY_L);
+    public final KeyBinding keyBindingNoExhaustion = new KeyBinding("key.noExhaustion", Keyboard.KEY_K);
+    public final KeyBinding keyBindingJesus = new KeyBinding("key.jesus", Keyboard.KEY_J);
+    public final KeyBinding keyBindingKillAura = new KeyBinding("key.killAura", Keyboard.KEY_R);
+    public final KeyBinding keyBindingFullbright = new KeyBinding("key.fullbright", Keyboard.KEY_B);
+    public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
+    public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
+    public final KeyBinding keyBindingXray = new KeyBinding("key.xray", Keyboard.KEY_X);
+    public final KeyBinding keyBindingPageLeft = new KeyBinding("key.pageLeft", Keyboard.KEY_LEFT);
+    public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
 
     //@see MinecraftMixin
     public void onTick() {
@@ -652,6 +470,53 @@ public final class DilationCore extends Mod {
                 }
             }
         }
+    }
+
+    //checks to see if the player or world is not loaded.
+    //very important to not load things if their dependencies are not loaded.
+    public boolean failsNullCheck() {
+        Minecraft minecraft = Minecraft.getInstance();
+
+        if (minecraft == null || minecraft.thePlayer == null || minecraft.theWorld == null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    //resets world render when changing brightness
+    private void fullbrightCleanUp() {
+
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        Minecraft.getInstance().renderGlobal.updateRenderers(Minecraft.getInstance().thePlayer, Minecraft.getSystemTime());
+        Minecraft.getInstance().renderGlobal.loadRenderers();
+    }
+
+    //checks to see if certain conditions are present that could harm the player if jesus is on.
+    public boolean shouldJesus(int x, int y, int z) {
+
+        Minecraft minecraft = Minecraft.getInstance();
+        EntityPlayerSP entityPlayerSP = minecraft.thePlayer;
+        World world = minecraft.theWorld;
+
+        if (entityPlayerSP.isInWater() || entityPlayerSP.isInsideOfMaterial(Materials.LAVA) || entityPlayerSP.isInsideOfMaterial(Materials.ACID) ||  entityPlayerSP.isInsideOfMaterial(Materials.SANGUIS)) {
+            return false;
+        }
+
+        Material material = world.getBlockMaterial(x, y, z);
+
+        if (material == Materials.LAVA || material == Materials.ACID || material == Materials.SANGUIS) {
+            return true;
+        }
+
+        if (minecraft.currentScreen == null && Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.keyCode)) {
+            return false;
+        }
+
+        return !(entityPlayerSP.fallDistance >= 3);
     }
 
     // toggle modules from keybind
