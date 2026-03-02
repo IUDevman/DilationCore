@@ -58,6 +58,14 @@ public final class EntityRendererManagerMixin {
             return false;
         }
 
+        if (!entity.isEntityAlive()) {
+            return false;
+        }
+
+        if (entity.ticksExisted <= 2) {
+            return false;
+        }
+
         return true;
     }
 }

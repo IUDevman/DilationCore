@@ -113,6 +113,38 @@ public final class NetClientHandlerMixin {
             //put this last as it has statements that can override fullbright.
             String[] messages = message.split(" ");
 
+            messages[0] = messages[0].toLowerCase();
+
+            if (messages[0].equals("-torchnuker") || messages[0].equals("-tn")) {
+
+                if (messages.length == 1) {
+                    dilationCore.toggleTorchNuker();
+                    ci.cancel();
+                    return;
+                }
+
+                String value = messages[1];
+
+                if (value == null) {
+                    ci.cancel();
+                    return;
+                }
+
+                try {
+
+                    int value1 = Integer.parseInt(value);
+
+                    dilationCore.setTorchNukerRange(value1);
+                    dilationCore$sendTorchNukerRangeToggleMessage(dilationCore.getTorchNukerRange(), 1, 10);
+
+                    ci.cancel();
+                    return;
+
+                } catch (Exception ignored) {
+
+                }
+            }
+
             if (messages[0].equals("-tracer") || messages[0].equals("-tracers") || messages[0].equals("-t")) {
 
                 if (messages.length == 1) {
@@ -142,7 +174,7 @@ public final class NetClientHandlerMixin {
                 }
 
 
-                String value = messages[1];
+                String value = messages[1].toLowerCase();
 
                 if (value == null) {
                     ci.cancel();
@@ -163,17 +195,17 @@ public final class NetClientHandlerMixin {
 
                 }
 
-                if (value.toLowerCase().contains("p")) {
+                if (value.contains("p")) {
                     dilationCore.setAttackPlayers(!dilationCore.shouldAttackPlayers());
                     dilationCore$sendKillAuraToggleMessage("Players", dilationCore.shouldAttackPlayers(), dilationCore.shouldAttackPlayers(), dilationCore.shouldAttackHostiles(), dilationCore.shouldAttackAnimals());
                 }
 
-                if (value.toLowerCase().contains("h")) {
+                if (value.contains("h")) {
                     dilationCore.setAttackHostiles(!dilationCore.shouldAttackHostiles());
                     dilationCore$sendKillAuraToggleMessage("Hostiles", dilationCore.shouldAttackHostiles(), dilationCore.shouldAttackPlayers(), dilationCore.shouldAttackHostiles(), dilationCore.shouldAttackAnimals());
                 }
 
-                if (value.toLowerCase().contains("a")) {
+                if (value.contains("a")) {
                     dilationCore.setAttackAnimals(!dilationCore.shouldAttackAnimals());
                     dilationCore$sendKillAuraToggleMessage("Animals", dilationCore.shouldAttackAnimals(), dilationCore.shouldAttackPlayers(), dilationCore.shouldAttackHostiles(), dilationCore.shouldAttackAnimals());
                 }
@@ -212,6 +244,13 @@ public final class NetClientHandlerMixin {
                 ci.cancel();
             }
         }
+    }
+
+    @Unique
+    private void dilationCore$sendTorchNukerRangeToggleMessage(int range, int min, int max) {
+        String message = "[§bDilation§9Core§f] Set TorchNuker Range Setting To §c" + range + " §f(min = " + min + ", max = " + max + ").";
+
+        Minecraft.getInstance().thePlayer.addChatMessage(message);
     }
 
     @Unique

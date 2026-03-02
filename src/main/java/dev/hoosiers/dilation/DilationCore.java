@@ -5,14 +5,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.EntityOtherPlayerMP;
 import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.util.KeyBinding;
+import net.minecraft.common.block.Blocks;
 import net.minecraft.common.block.data.Material;
 import net.minecraft.common.block.data.Materials;
 import net.minecraft.common.entity.Entity;
 import net.minecraft.common.entity.animals.EntityAnimal;
 import net.minecraft.common.entity.monsters.EntityMonster;
 import net.minecraft.common.entity.monsters.EntitySlime;
+import net.minecraft.common.networking.Packet14BlockDig;
 import net.minecraft.common.world.World;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector4f;
 
 import java.io.*;
 import java.util.*;
@@ -61,6 +64,7 @@ public final class DilationCore extends Mod {
     private boolean shouldNoFall = false;
     private boolean shouldNoWeather = false;
     private boolean shouldTracers = false;
+    private boolean shouldTorchNuker = false;
     private boolean shouldXray = false;
 
     public boolean shouldESP() {
@@ -101,6 +105,10 @@ public final class DilationCore extends Mod {
 
     public boolean shouldTracers() {
         return this.shouldTracers;
+    }
+
+    public boolean shouldTorchNuker() {
+        return this.shouldTorchNuker;
     }
 
     public boolean shouldXray() {
@@ -157,6 +165,11 @@ public final class DilationCore extends Mod {
     public void toggleTracers() {
         this.shouldTracers = !this.shouldTracers();
         this.sendChatToggleMessage("Tracers", this.shouldTracers());
+    }
+
+    public void toggleTorchNuker() {
+        this.shouldTorchNuker = !this.shouldTorchNuker();
+        this.sendChatToggleMessage("TorchNuker", this.shouldTorchNuker());
     }
 
     public void toggleXray() {
@@ -287,6 +300,24 @@ public final class DilationCore extends Mod {
         }
     }
 
+    private int torchNukerRange = 5;
+
+    public int getTorchNukerRange() {
+        return this.torchNukerRange;
+    }
+
+    public void setTorchNukerRange(int torchNukerRange) {
+        if (torchNukerRange < 1) {
+            torchNukerRange = 1;
+        }
+
+        if (torchNukerRange > 10) {
+            torchNukerRange = 10;
+        }
+
+        this.torchNukerRange = torchNukerRange;
+    }
+
     private boolean shouldSendToggleMessages = true;
 
     public boolean shouldSendToggleMessages() {
@@ -371,9 +402,12 @@ public final class DilationCore extends Mod {
     public final KeyBinding keyBindingFullbright = new KeyBinding("key.fullbright", Keyboard.KEY_B);
     public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
     public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
+    public final KeyBinding keyBindingTorchNuker = new KeyBinding("key.torchNuker", Keyboard.KEY_U);
     public final KeyBinding keyBindingXray = new KeyBinding("key.xray", Keyboard.KEY_X);
     public final KeyBinding keyBindingPageLeft = new KeyBinding("key.pageLeft", Keyboard.KEY_LEFT);
     public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
+
+    private int torchNukerDelay = 0;
 
     //@see MinecraftMixin
     public void onTick() {
@@ -470,6 +504,76 @@ public final class DilationCore extends Mod {
                 }
             }
         }
+
+        //TorchNuker
+        if (this.shouldTorchNuker()) {
+
+            //Have a delay of about 5 ticks
+            if (this.torchNukerDelay < 5) {
+                torchNukerDelay++;
+                return;
+            }
+
+            //reset delay even if we don't break a torch to prevent this setting from getting stuck
+            this.torchNukerDelay = 0;
+
+            int eX = (int) Minecraft.getInstance().thePlayer.posX;
+            int eY = (int) Minecraft.getInstance().thePlayer.posY;
+            int eZ = (int) Minecraft.getInstance().thePlayer.posZ;
+
+            double torchNukerRangeSquared = Math.sqrt(this.getTorchNukerRange());
+
+            ArrayList<Vector4f> torchCoordinates = new ArrayList<>();
+
+            ArrayList<Integer> torchTypes = this.getTorchTypes();
+
+            //get a list of coordinates within the range of the torch nuker.
+            for (int x = -this.getTorchNukerRange(); x <= this.getTorchNukerRange(); x++) {
+                for (int y = -this.getTorchNukerRange(); y <= this.getTorchNukerRange(); y++) {
+                    for (int z = -this.getTorchNukerRange(); z<= this.getTorchNukerRange(); z++) {
+
+                        double distanceSquared = Math.sqrt(x) + Math.sqrt(y) + Math.sqrt(z);
+
+                        if (torchNukerRangeSquared <= distanceSquared) {
+                            continue;
+                        }
+
+                        int newX = eX + x;
+                        int newY = eY + y;
+                        int newZ = eZ + z;
+
+                        int blockID = Minecraft.getInstance().theWorld.getBlockId(newX, newY, newZ);
+
+                        if (torchTypes.contains(blockID)) {
+
+                            //Save the squared distance for later to sort the list
+                            Vector4f vector4f = new Vector4f(newX, newY, newZ, (float) distanceSquared);
+
+                            torchCoordinates.add(vector4f);
+                        }
+                    }
+                }
+            }
+
+            if (!torchCoordinates.isEmpty()) {
+
+                //find the closest torch
+                Vector4f vector4fX = torchCoordinates.stream().min(Comparator.comparing(vector4f -> vector4f.w)).orElse(null);
+
+                Minecraft.getInstance().getLogger().info("Found torch at " + vector4fX);
+
+                //Crashes in singleplayer without this
+                if (!Minecraft.getInstance().theWorld.isRemote) {
+                    return;
+                }
+
+                Minecraft.getInstance().getLogger().info("Tried to break " + vector4fX);
+
+                //break torch
+                Minecraft.getInstance().getSendQueue().addToSendQueue(new Packet14BlockDig(0, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
+                Minecraft.getInstance().getSendQueue().addToSendQueue(new Packet14BlockDig(2, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
+            }
+        }
     }
 
     //checks to see if the player or world is not loaded.
@@ -517,6 +621,22 @@ public final class DilationCore extends Mod {
         }
 
         return !(entityPlayerSP.fallDistance >= 3);
+    }
+
+    //Returns all of the different types of torches in ReIndev.
+    private ArrayList<Integer> getTorchTypes() {
+        ArrayList<Integer> torchTypes = new ArrayList<>();
+
+        torchTypes.add(Blocks.TORCH.blockID);
+        torchTypes.add(Blocks.JET_TORCH.blockID);
+        torchTypes.add(Blocks.STICKY_TORCH.blockID);
+        torchTypes.add(Blocks.QUARTZ_TORCH.blockID);
+        torchTypes.add(Blocks.MYTHRIL_TORCH.blockID);
+        torchTypes.add(Blocks.CITRINE_TORCH.blockID);
+        torchTypes.add(Blocks.REDSTONE_TORCH_ACTIVE.blockID);
+        torchTypes.add(Blocks.REDSTONE_TORCH_IDLE.blockID);
+
+        return torchTypes;
     }
 
     // toggle modules from keybind
@@ -570,6 +690,11 @@ public final class DilationCore extends Mod {
         //Tracers
         if (keyBindingTracers.isPressed()) {
             this.toggleTracers();
+        }
+
+        //TorchNuker
+        if (keyBindingTorchNuker.isPressed()) {
+            this.toggleTorchNuker();
         }
 
         //Xray
@@ -671,6 +796,14 @@ public final class DilationCore extends Mod {
                         this.setShouldTracersPortals(Boolean.parseBoolean(entry1));
                     }
 
+                    if (entry0.equals("TorchNuker") && Boolean.parseBoolean(entry1)) {
+                        this.toggleTorchNuker();
+                    }
+
+                    if (entry0.equals("RangeTN")) {
+                        this.setTorchNukerRange(Integer.parseInt(entry1));
+                    }
+
                     if (entry0.equals("Xray") && Boolean.parseBoolean(entry1)) {
                         this.toggleXray();
                     }
@@ -722,6 +855,8 @@ public final class DilationCore extends Mod {
             printWriter.println("NoWeather:" + this.shouldNoWeather());
             printWriter.println("Tracers:" + this.shouldTracers());
             printWriter.println("PortalsT:" + this.shouldTracersPortals());
+            printWriter.println("TorchNuker:" + this.shouldTorchNuker());
+            printWriter.println("RangeTN:" + this.getTorchNukerRange());
             printWriter.println("Xray:" + this.shouldXray());
             printWriter.println("DiamondsOnlyX:" + this.isDiamondsOnly());
             printWriter.println("GUIPage:" + this.getGuiPage());
