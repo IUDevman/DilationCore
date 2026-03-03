@@ -34,6 +34,7 @@ public final class ChatMessages {
     }
 
     //sends a chat message when commands are sent
+    //also handles command logic
     public static boolean handleCommandChatMessage(DilationCore dilationCore, String message) {
 
         //toggle module messages
