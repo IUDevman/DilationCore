@@ -145,4 +145,24 @@ public class XrayBlocks {
 
         return xrayBlocks;
     }
+
+    //@see RenderBlocksMixin
+    //returns if a block name is on the list of blocks to render during Xray.
+    //There are some types of blocks that have tons of different variants (such as ladders).
+    //I'm lazy so this is easier than the one-time payment of typing the full list.
+    public static boolean isXrayBlockByName(String name) {
+        return name.contains("ladder")
+                || name.contains("door")
+                || name.contains("button")
+                || name.contains("skull")
+                || name.contains("fence")
+                || name.contains("plate")
+                || name.contains("chain")
+                || name.contains("carved")
+                || name.contains("jack")
+                || name.contains("item frame")
+                || name.contains("plushie")
+                || name.contains("lamp")
+                || name.contains("cactus");
+    }
 }

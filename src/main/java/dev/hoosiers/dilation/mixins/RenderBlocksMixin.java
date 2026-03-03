@@ -38,20 +38,7 @@ public final class RenderBlocksMixin {
 
             String blockName = block.getBlockName().toLowerCase();
 
-            //too many fucking types!
-            if (!dilationCore.isDiamondsOnly() && (blockName.contains("ladder")
-                    || blockName.contains("door")
-                    || blockName.contains("button")
-                    || blockName.contains("skull")
-                    || blockName.contains("fence")
-                    || blockName.contains("plate")
-                    || blockName.contains("chain")
-                    || blockName.contains("carved")
-                    || blockName.contains("jack")
-                    || blockName.contains("item frame")
-                    || blockName.contains("plushie")
-                    || blockName.contains("lamp")
-                    || blockName.contains("cactus"))) {
+            if (!dilationCore.isDiamondsOnly() && XrayBlocks.isXrayBlockByName(blockName)) {
                 return;
             }
 
