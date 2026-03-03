@@ -10,6 +10,8 @@ import net.minecraft.client.Minecraft;
 
 public final class ChatMessages {
 
+    private static final String clientPrefix = "[§bDilation§9Core§f]";
+
     //sends a chat message when modules are toggled
     public static void sendChatToggleMessage(DilationCore dilationCore, String module, boolean enabled) {
         if (dilationCore.failsNullCheck()) {
@@ -23,9 +25,9 @@ public final class ChatMessages {
         String message = "";
 
         if (enabled) {
-            message = "[§bDilation§9Core§f] Module " + module + " §aEnabled§f!";
+            message = clientPrefix + " Module " + module + " §aEnabled§f!";
         } else {
-            message = "[§bDilation§9Core§f] Module " + module + " §cDisabled§f!";
+            message = clientPrefix + " Module " + module + " §cDisabled§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
@@ -212,9 +214,9 @@ public final class ChatMessages {
         String message = "";
 
         if (toggleMessages) {
-            message = "[§bDilation§9Core§f] Set Module Toggle Messages To §aTrue§f!";
+            message = clientPrefix + " Set Module Toggle Messages To §aTrue§f!";
         } else {
-            message = "[§bDilation§9Core§f] Set Module Toggle Messages To §cFalse§f!";
+            message = clientPrefix + " Set Module Toggle Messages To §cFalse§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
@@ -225,9 +227,9 @@ public final class ChatMessages {
         String message = "";
 
         if (diamondsOnly) {
-            message = "[§bDilation§9Core§f] Set Xray Diamonds Only Setting To §aTrue§f!";
+            message = clientPrefix + " Set Xray Diamonds Only Setting To §aTrue§f!";
         } else {
-            message = "[§bDilation§9Core§f] Set Xray Diamonds Only Setting To §cFalse§f!";
+            message = clientPrefix + " Set Xray Diamonds Only Setting To §cFalse§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
@@ -235,7 +237,7 @@ public final class ChatMessages {
 
     //sends TorchNuker message
     private static void sendTorchNukerRangeToggleMessage(int range, int min, int max) {
-        String message = "[§bDilation§9Core§f] Set TorchNuker Range Setting To §c" + range + " §f(min = " + min + ", max = " + max + ").";
+        String message = clientPrefix + " Set TorchNuker Range Setting To §c" + range + " §f(min = " + min + ", max = " + max + ").";
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
     }
@@ -245,9 +247,9 @@ public final class ChatMessages {
         String message = "";
 
         if (portals) {
-            message = "[§bDilation§9Core§f] Set Tracers Draw to Portals Setting To §aTrue§f!";
+            message = clientPrefix + " Set Tracers Draw to Portals Setting To §aTrue§f!";
         } else {
-            message = "[§bDilation§9Core§f] Set Tracers Draw to Portals Setting To §cFalse§f!";
+            message = clientPrefix + " Set Tracers Draw to Portals Setting To §cFalse§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
@@ -259,21 +261,21 @@ public final class ChatMessages {
         String hostile = hostiles ? "§aHostiles" : "§cHostiles";
         String passive = passives ? "§aPassive" : "§cPassive";
 
-        String message = "[§bDilation§9Core§f] Set Killaura Setting " + param + " to §c" + paramValue + "§f(" + player + "§f/" + hostile + "§f/" + passive + "§f).";
+        String message = clientPrefix + " Set Killaura Setting " + param + " to §c" + paramValue + "§f(" + player + "§f/" + hostile + "§f/" + passive + "§f).";
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
     }
 
     //sends KillAura range toggle message
     private static void sendKillAuraRangeToggleMessage(int range, int min, int max) {
-        String message = "[§bDilation§9Core§f] Set KillAura Range Setting To §c" + range + " §f(min = " + min + ", max = " + max + ").";
+        String message = clientPrefix + " Set KillAura Range Setting To §c" + range + " §f(min = " + min + ", max = " + max + ").";
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
     }
 
     //sends Flight range toggle message
     private static void sendFlightSpeedToggleMessage(int speed, int min, int max) {
-        String message = "[§bDilation§9Core§f] Set Flight Speed Setting To §c" + speed + " §f(min = " + min + ", max = " + max + ").";
+        String message = clientPrefix + " Set Flight Speed Setting To §c" + speed + " §f(min = " + min + ", max = " + max + ").";
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
     }
