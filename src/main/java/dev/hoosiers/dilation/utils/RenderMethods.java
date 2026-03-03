@@ -7,10 +7,13 @@ import net.minecraft.common.block.Blocks;
 import net.minecraft.common.block.tileentity.*;
 import net.minecraft.common.entity.Entity;
 import net.minecraft.common.entity.animals.EntityAnimal;
+import net.minecraft.common.entity.monsters.EntityBloodWyvern;
 import net.minecraft.common.entity.monsters.EntityMonster;
 import net.minecraft.common.entity.monsters.EntitySlime;
+import net.minecraft.common.entity.monsters.EntityWyvern;
 import net.minecraft.common.entity.other.EntityItem;
 import net.minecraft.common.entity.other.EntityItemFireResistant;
+import net.minecraft.common.entity.projectile.EntityFireballWyvern;
 import net.minecraft.common.util.math.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
@@ -114,7 +117,13 @@ public final class RenderMethods {
             return Color.GREEN.getRGB();
         }
 
+        //Slimes are not listed as monsters for some reason
         if (entity instanceof EntityMonster || entity instanceof EntitySlime) {
+            return Color.RED.getRGB();
+        }
+
+        //Neither are Wyverns
+        if (entity instanceof EntityWyvern || entity instanceof EntityBloodWyvern || entity instanceof EntityFireballWyvern) {
             return Color.RED.getRGB();
         }
 
