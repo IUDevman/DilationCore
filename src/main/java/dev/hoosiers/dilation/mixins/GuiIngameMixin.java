@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngame;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -103,5 +104,29 @@ public final class GuiIngameMixin {
 
         int pageX = minecraft.fontRenderer.getStringWidth(dilationCoreMessage) - minecraft.fontRenderer.getStringWidth(pageString);
         guiIngame.drawString(minecraft.fontRenderer, pageString, pageX + 2, maxY - 9, textColor);
+
+        //Coordinates
+        int posX = (int) minecraft.thePlayer.posX;
+        int posY = (int) minecraft.thePlayer.posY - 1; //Why?
+        int posZ = (int) minecraft.thePlayer.posZ;
+
+        if (minecraft.theWorld.worldProvider.isHellWorld) {
+            posX *= 8;
+            posZ *= 8;
+        }
+
+        guiIngame.drawCenteredString(minecraft.fontRenderer, dilationCore$getCoordsString(posX, posY, posZ, false), (float) maxX / 2, maxY + 2, Color.WHITE.getRGB());
+        guiIngame.drawCenteredString(minecraft.fontRenderer, dilationCore$getCoordsString(posX, posY, posZ, true), (float) maxX / 2, maxY + 12, Color.RED.getRGB());
+    }
+
+    //Returns string for player coordinates
+    @Unique
+    private String dilationCore$getCoordsString(int x, int y, int z, boolean nether) {
+        if (nether) {
+            x /= 8;
+            z /= 8;
+        }
+
+        return "(" + x + ", " + y + ", " + z + ")";
     }
 }

@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation;
 
 import com.fox2code.foxloader.loader.Mod;
+import dev.hoosiers.dilation.utils.ChatMessages;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.EntityOtherPlayerMP;
 import net.minecraft.client.player.EntityPlayerSP;
@@ -117,65 +118,65 @@ public final class DilationCore extends Mod {
 
     public void toggleESP() {
         this.shouldESP = !this.shouldESP();
-        this.sendChatToggleMessage("ESP", this.shouldESP());
+        ChatMessages.sendChatToggleMessage(this, "ESP", this.shouldESP());
     }
 
     public void toggleFastBreak() {
         this.shouldFastBreak = !this.shouldFastBreak();
-        this.sendChatToggleMessage("FastBreak", this.shouldFastBreak());
+        ChatMessages.sendChatToggleMessage(this, "FastBreak", this.shouldFastBreak());
     }
 
     public void toggleFly() {
         this.shouldFly = !this.shouldFly();
-        this.sendChatToggleMessage("Fly", this.shouldFly());
+        ChatMessages.sendChatToggleMessage(this, "Fly", this.shouldFly());
     }
 
     public void toggleFullbright() {
         this.shouldFullbright = !this.shouldFullbright();
         this.fullbrightCleanUp();
-        this.sendChatToggleMessage("Fullbright", this.shouldFullbright());
+        ChatMessages.sendChatToggleMessage(this, "Fullbright", this.shouldFullbright());
 
     }
 
     public void toggleJesus() {
         this.shouldJesus = !this.shouldJesus();
-        this.sendChatToggleMessage("Jesus", this.shouldJesus());
+        ChatMessages.sendChatToggleMessage(this, "Jesus", this.shouldJesus());
     }
 
     public void toggleKillAura() {
         this.shouldKillAura = !this.shouldKillAura();
-        this.sendChatToggleMessage("KillAura", this.shouldKillAura());
+        ChatMessages.sendChatToggleMessage(this, "KillAura", this.shouldKillAura());
     }
 
     public void toggleNoExhaustion()  {
         this.shouldNoExhaustion = !this.shouldNoExhaustion();
-        this.sendChatToggleMessage("NoExhaustion", this.shouldNoExhaustion());
+        ChatMessages.sendChatToggleMessage(this, "NoExhaustion", this.shouldNoExhaustion());
     }
 
     public void toggleNoFall() {
         this.shouldNoFall = !this.shouldNoFall();
-        this.sendChatToggleMessage("NoFall", this.shouldNoFall());
+        ChatMessages.sendChatToggleMessage(this, "NoFall", this.shouldNoFall());
     }
 
     public void toggleNoWeather() {
         this.shouldNoWeather = !this.shouldNoWeather();
-        this.sendChatToggleMessage("NoWeather", this.shouldNoWeather());
+        ChatMessages.sendChatToggleMessage(this, "NoWeather", this.shouldNoWeather());
     }
 
     public void toggleTracers() {
         this.shouldTracers = !this.shouldTracers();
-        this.sendChatToggleMessage("Tracers", this.shouldTracers());
+        ChatMessages.sendChatToggleMessage(this, "Tracers", this.shouldTracers());
     }
 
     public void toggleTorchNuker() {
         this.shouldTorchNuker = !this.shouldTorchNuker();
-        this.sendChatToggleMessage("TorchNuker", this.shouldTorchNuker());
+        ChatMessages.sendChatToggleMessage(this, "TorchNuker", this.shouldTorchNuker());
     }
 
     public void toggleXray() {
         this.shouldXray = !this.shouldXray();
         this.fullbrightCleanUp();
-        this.sendChatToggleMessage("Xray", this.shouldXray());
+        ChatMessages.sendChatToggleMessage(this, "Xray", this.shouldXray());
     }
 
     private int flightSpeed = 5;
@@ -326,48 +327,6 @@ public final class DilationCore extends Mod {
 
     public void setShouldSendToggleMessages(boolean shouldSendToggleMessages){
         this.shouldSendToggleMessages = shouldSendToggleMessages;
-    }
-
-    //sends a chat message when modules are toggled
-    private void sendChatToggleMessage(String module, boolean enabled) {
-        if (this.failsNullCheck()) {
-            return;
-        }
-
-        if (!this.shouldSendToggleMessages()) {
-            return;
-        }
-
-        String message = "";
-
-        if (enabled) {
-            message = "[§bDilation§9Core§f] Module " + module + " §aEnabled§f!";
-        } else {
-            message = "[§bDilation§9Core§f] Module " + module + " §cDisabled§f!";
-        }
-
-        Minecraft.getInstance().thePlayer.addChatMessage(message);
-
-        this.incrementAndRemindToggleMessages();
-    }
-
-    private int messageCount = 0;
-
-    private int getMessageCount() {
-        return this.messageCount;
-    }
-
-    private void resetMessageCount() {
-        this.messageCount = 0;
-    }
-
-    private void incrementAndRemindToggleMessages() {
-        this.messageCount += 1;
-
-        if (this.getMessageCount() == 20) {
-            Minecraft.getInstance().thePlayer.addChatMessage("[§bDilation§9Core§f] Getting spammed too much? Type §c-tm§f to disable toggle messages!");
-            this.resetMessageCount();
-        }
     }
 
     //Pages for gui... it's getting pretty long
@@ -619,7 +578,7 @@ public final class DilationCore extends Mod {
         return !(entityPlayerSP.fallDistance >= 3);
     }
 
-    //Returns all of the different types of torches in ReIndev.
+    //Returns all the different types of torches in ReIndev.
     private ArrayList<Integer> getTorchTypes() {
         ArrayList<Integer> torchTypes = new ArrayList<>();
 
