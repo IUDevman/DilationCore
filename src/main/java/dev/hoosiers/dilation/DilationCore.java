@@ -2,9 +2,9 @@ package dev.hoosiers.dilation;
 
 import com.fox2code.foxloader.loader.Mod;
 import dev.hoosiers.dilation.utils.ChatMessages;
+import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.EntityOtherPlayerMP;
-import net.minecraft.client.player.EntityPlayerSP;
 import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.block.Blocks;
 import net.minecraft.common.block.data.Material;
@@ -14,7 +14,6 @@ import net.minecraft.common.entity.animals.EntityAnimal;
 import net.minecraft.common.entity.monsters.EntityMonster;
 import net.minecraft.common.entity.monsters.EntitySlime;
 import net.minecraft.common.networking.Packet14BlockDig;
-import net.minecraft.common.world.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -26,17 +25,25 @@ import java.util.*;
  * @since 02-20-2026
  */
 
-public final class DilationCore extends Mod {
+public final class DilationCore extends Mod implements Globals {
 
     //mod instance
     private static DilationCore INSTANCE;
 
     public DilationCore() {
-        INSTANCE = this;
+        if (INSTANCE == null) {
+            INSTANCE = this;
+        }
     }
 
     //get mod instance
+    //create a new instance if DilationCore has not been loaded yet
     public static DilationCore getInstance() {
+
+        if (INSTANCE == null) {
+            new DilationCore();
+        }
+
         return INSTANCE;
     }
 
@@ -372,31 +379,31 @@ public final class DilationCore extends Mod {
     public void onTick() {
 
         //Activate modules
-        if (Minecraft.getInstance().currentScreen == null) {
+        if (this.getCurrentScreen() == null) {
             triggerModuleFromKey();
         }
 
         //No fall
         if (this.shouldNoFall()) {
-            Minecraft.getInstance().thePlayer.fallDistance = 0;
+            this.getPlayer().fallDistance = 0;
         }
 
         //Flight
         if (this.shouldFly()) {
-            Minecraft.getInstance().thePlayer.motionX = 0;
-            Minecraft.getInstance().thePlayer.motionY = 0;
-            Minecraft.getInstance().thePlayer.motionZ = 0;
+            this.getPlayer().motionX = 0;
+            this.getPlayer().motionY = 0;
+            this.getPlayer().motionZ = 0;
 
-            Minecraft.getInstance().thePlayer.jumpMovementFactor = (float) (this.getFlightSpeed() / 3);
+            this.getPlayer().jumpMovementFactor = (float) (this.getFlightSpeed() / 3);
 
             //makes sure these don't run when in the chat
-            if (Minecraft.getInstance().currentScreen == null) {
-                if (Keyboard.isKeyDown(Minecraft.getInstance().gameSettings.keyBindJump.keyCode)) {
-                    Minecraft.getInstance().thePlayer.motionY = Minecraft.getInstance().thePlayer.motionY + ((double) this.getFlightSpeed() / 4);
+            if (this.getCurrentScreen() == null) {
+                if (Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
+                    this.getPlayer().motionY = this.getPlayer().motionY + ((double) this.getFlightSpeed() / 4);
                 }
 
-                if (Keyboard.isKeyDown(Minecraft.getInstance().gameSettings.keyBindSneak.keyCode)) {
-                    Minecraft.getInstance().thePlayer.motionY = Minecraft.getInstance().thePlayer.motionY - ((double) this.flightSpeed / 4);
+                if (Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindSneak.keyCode)) {
+                    this.getPlayer().motionY = this.getPlayer().motionY - ((double) this.flightSpeed / 4);
                 }
             }
 
@@ -404,17 +411,17 @@ public final class DilationCore extends Mod {
 
         //Jesus
         if (this.shouldJesus()) {
-            boolean isInLava = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.LAVA);
-            boolean isInAcid = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.ACID);
-            boolean isInSanguis = Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.SANGUIS);
+            boolean isInLava = this.getPlayer().isInsideOfMaterial(Materials.LAVA);
+            boolean isInAcid = this.getPlayer().isInsideOfMaterial(Materials.ACID);
+            boolean isInSanguis = this.getPlayer().isInsideOfMaterial(Materials.SANGUIS);
 
-            if (Minecraft.getInstance().thePlayer.isInWater() || isInLava || isInSanguis || isInAcid) {
+            if (this.getPlayer().isInWater() || isInLava || isInSanguis || isInAcid) {
 
-                if (Minecraft.getInstance().currentScreen == null && Keyboard.isKeyDown(Minecraft.getInstance().gameSettings.keyBindSneak.keyCode)) {
+                if (this.getCurrentScreen() == null && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindSneak.keyCode)) {
                     return;
                 }
 
-                Minecraft.getInstance().thePlayer.motionY = (isInLava || isInAcid || isInSanguis) ? 1.2d : 0.30d;
+                this.getPlayer().motionY = (isInLava || isInAcid || isInSanguis) ? 1.2d : 0.30d;
             }
         }
 
@@ -423,8 +430,8 @@ public final class DilationCore extends Mod {
 
             LinkedHashMap<Entity, Double> entitiesToKill = new LinkedHashMap<>();
 
-            for (int i = 0; i < Minecraft.getInstance().theWorld.loadedEntityList.size(); i++) {
-                Entity entity = Minecraft.getInstance().theWorld.loadedEntityList.get(i);
+            for (int i = 0; i < this.getWorld().loadedEntityList.size(); i++) {
+                Entity entity = this.getWorld().loadedEntityList.get(i);
 
                 //I don't know if this is needed
                 if (entity == null) {
@@ -432,14 +439,14 @@ public final class DilationCore extends Mod {
                 }
 
                 //Don't hit us!
-                if (entity == Minecraft.getInstance().thePlayer) {
+                if (entity == this.getPlayer()) {
                     continue;
                 }
 
                 //should be the least performance intensive operation
                 if (this.shouldAttackEntity(entity)) {
 
-                    double distance = Minecraft.getInstance().thePlayer.getDistanceToEntity(entity);
+                    double distance = this.getPlayer().getDistanceToEntity(entity);
 
                     //confirm that the entity is in range
                     if (distance <= this.getAuraRange()) {
@@ -458,8 +465,8 @@ public final class DilationCore extends Mod {
                 Map.Entry<Entity, Double> result = entryList.stream().findFirst().orElse(null);
 
                 if (result != null) {
-                    Minecraft.getInstance().playerController.attackEntity(Minecraft.getInstance().thePlayer, result.getKey());
-                    Minecraft.getInstance().thePlayer.swingItem();
+                    this.getMinecraft().playerController.attackEntity(this.getPlayer(), result.getKey());
+                    this.getPlayer().swingItem();
                 }
             }
         }
@@ -476,9 +483,9 @@ public final class DilationCore extends Mod {
             //reset delay even if we don't break a torch to prevent this setting from getting stuck
             this.torchNukerDelay = 0;
 
-            int eX = (int) Minecraft.getInstance().thePlayer.posX;
-            int eY = (int) Minecraft.getInstance().thePlayer.posY;
-            int eZ = (int) Minecraft.getInstance().thePlayer.posZ;
+            int eX = (int) this.getPlayer().posX;
+            int eY = (int) this.getPlayer().posY;
+            int eZ = (int) this.getPlayer().posZ;
 
             double torchNukerRangeSquared = Math.pow(this.getTorchNukerRange(), 2);
 
@@ -501,7 +508,7 @@ public final class DilationCore extends Mod {
                         int newY = eY + y;
                         int newZ = eZ + z;
 
-                        int blockID = Minecraft.getInstance().theWorld.getBlockId(newX, newY, newZ);
+                        int blockID = this.getWorld().getBlockId(newX, newY, newZ);
 
                         if (torchTypes.contains(blockID)) {
 
@@ -520,27 +527,15 @@ public final class DilationCore extends Mod {
                 Vector4f vector4fX = torchCoordinates.stream().min(Comparator.comparing(vector4f -> vector4f.w)).orElse(null);
 
                 //Crashes in singleplayer without this
-                if (!Minecraft.getInstance().theWorld.isRemote) {
+                if (!this.getWorld().isRemote) {
                     return;
                 }
 
                 //break torch
-                Minecraft.getInstance().getSendQueue().addToSendQueue(new Packet14BlockDig(0, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
-                Minecraft.getInstance().getSendQueue().addToSendQueue(new Packet14BlockDig(2, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
+                this.sendPacket(new Packet14BlockDig(0, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
+                this.sendPacket(new Packet14BlockDig(2, (int) vector4fX.x, (int) vector4fX.y, (int) vector4fX.z, 0));
             }
         }
-    }
-
-    //checks to see if the player or world is not loaded.
-    //very important to not load things if their dependencies are not loaded.
-    public boolean failsNullCheck() {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        if (minecraft == null || minecraft.thePlayer == null || minecraft.theWorld == null) {
-            return true;
-        }
-
-        return false;
     }
 
     //resets world render when changing brightness
@@ -550,32 +545,31 @@ public final class DilationCore extends Mod {
             return;
         }
 
-        Minecraft.getInstance().renderGlobal.updateRenderers(Minecraft.getInstance().thePlayer, Minecraft.getSystemTime());
-        Minecraft.getInstance().renderGlobal.loadRenderers();
+        this.getMinecraft().renderGlobal.updateRenderers(this.getPlayer(), Minecraft.getSystemTime());
+        this.getMinecraft().renderGlobal.loadRenderers();
     }
 
     //checks to see if certain conditions are present that could harm the player if jesus is on.
     public boolean shouldJesus(int x, int y, int z) {
 
-        Minecraft minecraft = Minecraft.getInstance();
-        EntityPlayerSP entityPlayerSP = minecraft.thePlayer;
-        World world = minecraft.theWorld;
-
-        if (entityPlayerSP.isInWater() || entityPlayerSP.isInsideOfMaterial(Materials.LAVA) || entityPlayerSP.isInsideOfMaterial(Materials.ACID) ||  entityPlayerSP.isInsideOfMaterial(Materials.SANGUIS)) {
+        if (this.getPlayer().isInWater()
+                || this.getPlayer().isInsideOfMaterial(Materials.LAVA)
+                || this.getPlayer().isInsideOfMaterial(Materials.ACID)
+                ||  this.getPlayer().isInsideOfMaterial(Materials.SANGUIS)) {
             return false;
         }
 
-        Material material = world.getBlockMaterial(x, y, z);
+        Material material = this.getWorld().getBlockMaterial(x, y, z);
 
         if (material == Materials.LAVA || material == Materials.ACID || material == Materials.SANGUIS) {
             return true;
         }
 
-        if (minecraft.currentScreen == null && Keyboard.isKeyDown(minecraft.gameSettings.keyBindSneak.keyCode)) {
+        if (this.getCurrentScreen() == null && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindSneak.keyCode)) {
             return false;
         }
 
-        return !(entityPlayerSP.fallDistance >= 3);
+        return !(this.getPlayer().fallDistance >= 3);
     }
 
     //Returns all the different types of torches in ReIndev.
@@ -667,7 +661,7 @@ public final class DilationCore extends Mod {
 
     //returns config file.
     private File returnDilationCoreDirectory() {
-        File minecraftDirectory = Minecraft.getInstance().getMinecraftDir();
+        File minecraftDirectory = this.getMinecraft().getMinecraftDir();
 
         File dilationCoreDirectory = new File(minecraftDirectory, "DilationCoreConfig.txt");
 

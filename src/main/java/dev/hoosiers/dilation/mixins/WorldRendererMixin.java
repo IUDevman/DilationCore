@@ -2,6 +2,7 @@ package dev.hoosiers.dilation.mixins;
 
 import com.indigo3d.util.DisplayLists;
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import dev.hoosiers.dilation.utils.TileEntityDummy;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.world.RenderBlocks;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 
 @Mixin(value = WorldRenderer.class, priority = 6969)
-public abstract class WorldRendererMixin {
+public abstract class WorldRendererMixin implements Globals {
 
     @Shadow public boolean needsUpdate;
 
@@ -115,9 +116,13 @@ public abstract class WorldRendererMixin {
     //So, we set these as well.
     @Inject(method = "updateRenderer", at = @At("HEAD"), cancellable = true)
     public void updateRenderer(EntityLiving player, CallbackInfo ci) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        if (this.failsNullCheck()) {
+            return;
+        }
 
-        if (dilationCore == null || !dilationCore.shouldESP() || dilationCore.failsNullCheck()) {
+        DilationCore dilationCore = this.getDilationCore();
+
+        if (!dilationCore.shouldESP()) {
             return;
         }
 

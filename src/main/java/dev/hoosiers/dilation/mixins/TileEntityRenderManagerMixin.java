@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import dev.hoosiers.dilation.utils.RenderMethods;
 import dev.hoosiers.dilation.utils.TileEntityDummy;
 import net.minecraft.client.renderer.block.tileentity.TileEntityRenderManager;
@@ -19,17 +20,17 @@ import java.awt.*;
  */
 
 @Mixin(value = TileEntityRenderManager.class, priority = 6969)
-public final class TileEntityRenderManagerMixin {
+public final class TileEntityRenderManagerMixin implements Globals {
 
     //TileEntities for ESP (Chairs, Beacons, etc.).
     //Also portal tracers.
     @Inject(method = "renderTileEntityAt", at = @At("TAIL"))
     public <T extends TileEntity> void renderTileEntityAt(T te, double x, double y, double z, float deltaTicks, int progress, CallbackInfo ci) {
-        DilationCore dilationCore = DilationCore.getInstance();
-
-        if (dilationCore == null || dilationCore.failsNullCheck()) {
+        if (this.failsNullCheck()) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         if (dilationCore.shouldESP()) {
             RenderMethods.renderBoundingBoxFromCoords(te, x, y, z);

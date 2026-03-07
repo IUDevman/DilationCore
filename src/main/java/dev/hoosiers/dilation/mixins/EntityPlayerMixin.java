@@ -1,7 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
-import net.minecraft.client.Minecraft;
+import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.common.block.Block;
 import net.minecraft.common.block.data.Materials;
 import net.minecraft.common.effect.Effects;
@@ -20,16 +20,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(value = EntityPlayer.class, priority = 6969)
-public final class EntityPlayerMixin {
+public final class EntityPlayerMixin implements Globals {
 
     @Shadow @Final public InventoryPlayer inventory;
 
     //prevents sprint slowdown
     @Inject(method = "isExhausted", at = @At("HEAD"), cancellable = true)
     public void isExausted(CallbackInfoReturnable<Boolean> cir) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        DilationCore dilationCore = this.getDilationCore();
 
-        if (dilationCore == null || dilationCore.failsNullCheck()) {
+        if (this.failsNullCheck()) {
             return;
         }
 
@@ -41,9 +41,9 @@ public final class EntityPlayerMixin {
     //FastBreak
     @Inject(method = "getCurrentPlayerStrVsBlock", at = @At("HEAD"), cancellable = true)
     public void getCurrentPlayerStrVsBlock(Block block, CallbackInfoReturnable<Float> cir) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        DilationCore dilationCore = this.getDilationCore();
 
-        if (dilationCore == null || !dilationCore.shouldFastBreak() || dilationCore.failsNullCheck()) {
+        if (this.failsNullCheck() || !dilationCore.shouldFastBreak()) {
             return;
         }
 
@@ -52,8 +52,8 @@ public final class EntityPlayerMixin {
         //We don't want hand/incompatible hits entering the multiplier because of haste, so we check for it with this
         float oldStrength = strength;
 
-        if (Minecraft.getInstance().thePlayer.hasEffect(Effects.HASTE)) {
-            strength += Minecraft.getInstance().thePlayer.potionEffects.get(Effects.HASTE.effectID).getLevel() + 1 << 1;
+        if (this.getPlayer().hasEffect(Effects.HASTE)) {
+            strength += this.getPlayer().potionEffects.get(Effects.HASTE.effectID).getLevel() + 1 << 1;
         }
 
         //diamond tools
@@ -83,7 +83,7 @@ public final class EntityPlayerMixin {
 
         //Hard limit for underwater breaking
         //can break a little faster with hand, but not desired tool
-        if (Minecraft.getInstance().thePlayer.isInsideOfMaterial(Materials.WATER) && !Minecraft.getInstance().thePlayer.hasEffect(Effects.BREATHING)) {
+        if (this.getPlayer().isInsideOfMaterial(Materials.WATER) && !this.getPlayer().hasEffect(Effects.BREATHING)) {
 
             if (strength == 1.25){
                 strength /= 4.5F;

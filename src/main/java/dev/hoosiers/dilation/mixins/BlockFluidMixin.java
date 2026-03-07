@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.common.block.children.BlockFluid;
 import net.minecraft.common.util.math.AxisAlignedBB;
 import net.minecraft.common.world.World;
@@ -15,15 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(value = BlockFluid.class, priority = 6969)
-public final class BlockFluidMixin {
+public final class BlockFluidMixin implements Globals {
 
     //changes water collision box to full block
     @Inject(method = "getCollisionBoundingBoxFromPool", at = @At("HEAD"), cancellable = true)
     public void getCollisionBoundingBoxFromPool(World world, int x, int y, int z, CallbackInfoReturnable<AxisAlignedBB> cir) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        DilationCore dilationCore = this.getDilationCore();
 
-        if (dilationCore == null || dilationCore.failsNullCheck()) {
-
+        if (dilationCore.failsNullCheck()) {
             return;
         }
 

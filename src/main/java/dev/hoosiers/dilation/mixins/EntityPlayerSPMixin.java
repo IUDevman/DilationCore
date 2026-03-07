@@ -2,7 +2,7 @@ package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
 import dev.hoosiers.dilation.utils.ChatMessages;
-import net.minecraft.client.Minecraft;
+import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.client.player.EntityPlayerSP;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,13 +15,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = EntityPlayerSP.class, priority = 6969)
-public final class EntityPlayerSPMixin {
+public final class EntityPlayerSPMixin implements Globals {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String arg1, CallbackInfo ci) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        DilationCore dilationCore = this.getDilationCore();
 
-        if (dilationCore == null || arg1 == null || dilationCore.failsNullCheck() || Minecraft.getInstance().theWorld.isRemote) {
+        if (dilationCore.failsNullCheck() || arg1 == null || this.getWorld().isRemote) {
             return;
         }
 

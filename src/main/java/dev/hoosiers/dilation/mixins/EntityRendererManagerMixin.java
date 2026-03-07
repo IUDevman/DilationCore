@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import dev.hoosiers.dilation.utils.RenderMethods;
 import net.minecraft.client.player.EntityClientPlayerMP;
 import net.minecraft.client.player.EntityOtherPlayerMP;
@@ -21,15 +22,15 @@ import java.awt.*;
  */
 
 @Mixin(value = EntityRendererManager.class, priority = 6969)
-public final class EntityRendererManagerMixin {
+public final class EntityRendererManagerMixin implements Globals {
 
     //ESP main render method.
     //Set to tail or else the mob texture draws over the box.
     @Inject(method = "renderEntityWithPosYaw", at = @At("TAIL"))
     public <T extends Entity> void renderEntityWithPosYaw(T entity, double x, double y, double z, float yaw, float deltaTicks, boolean render_shadows, CallbackInfo ci) {
-        DilationCore dilationCore = DilationCore.getInstance();
+        DilationCore dilationCore = this.getDilationCore();
 
-        if (dilationCore == null || dilationCore.failsNullCheck()) {
+        if (dilationCore.failsNullCheck()) {
             return;
         }
 

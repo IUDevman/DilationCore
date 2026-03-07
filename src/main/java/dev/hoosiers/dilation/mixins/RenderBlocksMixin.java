@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import dev.hoosiers.dilation.utils.XrayBlocks;
 import net.minecraft.client.renderer.world.RenderBlocks;
 import net.minecraft.common.block.Block;
@@ -18,15 +19,19 @@ import java.util.ArrayList;
  */
 
 @Mixin(value = RenderBlocks.class, priority = 6969)
-public final class RenderBlocksMixin {
+public final class RenderBlocksMixin implements Globals {
 
     @Shadow private boolean renderAllFaces;
 
     @Inject(method = "renderBlockByRenderType", at = @At("HEAD"), cancellable = true)
     public void renderBlockByRenderType(Block block, int x, int y, int z, CallbackInfoReturnable<Boolean> cir)  {
-        DilationCore dilationCore = DilationCore.getInstance();
+        if (this.failsNullCheck()) {
+            return;
+        }
 
-        if (dilationCore == null || !dilationCore.shouldXray() || dilationCore.failsNullCheck()) {
+        DilationCore dilationCore = this.getDilationCore();
+
+        if (!dilationCore.shouldXray()) {
             return;
         }
 

@@ -1,6 +1,7 @@
 package dev.hoosiers.dilation.mixins;
 
 import dev.hoosiers.dilation.DilationCore;
+import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.DestroyBlockProgress;
 import net.minecraft.client.renderer.block.tileentity.TileEntityRenderManager;
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 
 @Mixin(value = RenderGlobal.class, priority = 6969)
-public final class RenderGlobalMixin {
+public final class RenderGlobalMixin implements Globals {
 
     @Shadow private int renderEntitiesStartupCounter;
 
@@ -54,9 +55,14 @@ public final class RenderGlobalMixin {
     //Copied renderEntities method but removed distance check so all mobs are rendered.
     @Inject(method = "renderEntities", at = @At("HEAD"), cancellable = true)
     public void renderEntitites(Vec3D vec3D, Frustrum frustum, float deltaTicks, CallbackInfo ci) {
-        DilationCore dilationCore = DilationCore.getInstance();
 
-        if (dilationCore == null || dilationCore.failsNullCheck() || !dilationCore.shouldESP()) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        DilationCore dilationCore = this.getDilationCore();
+
+        if (!dilationCore.shouldESP()) {
             return;
         }
 
@@ -100,7 +106,7 @@ public final class RenderGlobalMixin {
 
                 //Note: I've added this to try to prevent a weird rendering glitch if the player dies with ESP on.
                 //Without it, entity "shadows" will still be rendered and are stuck there unless relogged.
-                if (Minecraft.getInstance().thePlayer.isDead) {
+                if (this.getPlayer().isDead) {
                     continue;
                 }
 
