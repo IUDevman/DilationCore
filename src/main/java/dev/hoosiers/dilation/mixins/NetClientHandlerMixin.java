@@ -5,9 +5,7 @@ import dev.hoosiers.dilation.DilationCore;
 import dev.hoosiers.dilation.utils.ChatMessages;
 import dev.hoosiers.dilation.utils.Globals;
 import net.minecraft.client.networking.NetClientHandler;
-import net.minecraft.common.networking.Packet;
-import net.minecraft.common.networking.Packet10Flying;
-import net.minecraft.common.networking.Packet3Chat;
+import net.minecraft.common.networking.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +22,6 @@ public final class NetClientHandlerMixin implements Globals {
     //use this inject to modify and examine sent packets
     @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
     public void addToSendQueue(Packet packet, CallbackInfo ci) {
-
         if (packet == null || this.failsNullCheck()) {
             return;
         }

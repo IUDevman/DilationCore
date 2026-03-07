@@ -23,7 +23,6 @@ public final class GuiIngameMixin implements Globals {
     //render DilationCore HUD and module list
     @Inject(method = "renderHUD", at = @At("HEAD"))
     public void renderHUD(int x, int y, float deltaTicks, CallbackInfo ci) {
-
         if (this.failsNullCheck() || this.getGuiIngame() == null) {
             return;
         }

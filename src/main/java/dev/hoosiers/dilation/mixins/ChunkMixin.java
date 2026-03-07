@@ -19,11 +19,11 @@ public final class ChunkMixin implements Globals {
     //sets block brightness
     @Inject(method = "getBlockLightValue", at = @At("HEAD"), cancellable = true)
     public void getBlockLightValue(int x, int y, int z, int lightmodifier, CallbackInfoReturnable<Integer> cir) {
-        DilationCore dilationCore = this.getDilationCore();
-
         if (this.failsNullCheck()) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         if (dilationCore.shouldFullbright() || dilationCore.shouldXray()) {
             cir.setReturnValue(15);

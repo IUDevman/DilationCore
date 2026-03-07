@@ -27,11 +27,11 @@ public final class EntityPlayerMixin implements Globals {
     //prevents sprint slowdown
     @Inject(method = "isExhausted", at = @At("HEAD"), cancellable = true)
     public void isExausted(CallbackInfoReturnable<Boolean> cir) {
-        DilationCore dilationCore = this.getDilationCore();
-
         if (this.failsNullCheck()) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         if (dilationCore.shouldNoExhaustion()) {
             cir.setReturnValue(false);
@@ -41,9 +41,13 @@ public final class EntityPlayerMixin implements Globals {
     //FastBreak
     @Inject(method = "getCurrentPlayerStrVsBlock", at = @At("HEAD"), cancellable = true)
     public void getCurrentPlayerStrVsBlock(Block block, CallbackInfoReturnable<Float> cir) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
         DilationCore dilationCore = this.getDilationCore();
 
-        if (this.failsNullCheck() || !dilationCore.shouldFastBreak()) {
+        if (!dilationCore.shouldFastBreak()) {
             return;
         }
 

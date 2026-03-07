@@ -55,7 +55,6 @@ public final class RenderGlobalMixin implements Globals {
     //Copied renderEntities method but removed distance check so all mobs are rendered.
     @Inject(method = "renderEntities", at = @At("HEAD"), cancellable = true)
     public void renderEntitites(Vec3D vec3D, Frustrum frustum, float deltaTicks, CallbackInfo ci) {
-
         if (this.failsNullCheck()) {
             return;
         }

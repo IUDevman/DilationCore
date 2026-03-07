@@ -20,11 +20,11 @@ public final class EntityRendererMixin implements Globals {
     //delete ugly entity shadows
     @Inject(method = "renderShadow", at = @At("HEAD"), cancellable = true)
     public <T extends Entity> void renderShadow(T entity, double x, double y, double z, float opacity, float deltaTicks, CallbackInfo ci) {
-        DilationCore dilationCore = this.getDilationCore();
-
-        if (dilationCore.failsNullCheck()) {
+        if (this.failsNullCheck()) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         if (dilationCore.shouldFullbright() || dilationCore.shouldXray()) {
             ci.cancel();

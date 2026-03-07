@@ -114,6 +114,7 @@ public abstract class WorldRendererMixin implements Globals {
     //We add them back (no special render)...
     //Also, some things that should be tile entities are not (crafting table(s), dimensional chest).
     //So, we set these as well.
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Inject(method = "updateRenderer", at = @At("HEAD"), cancellable = true)
     public void updateRenderer(EntityLiving player, CallbackInfo ci) {
         if (this.failsNullCheck()) {

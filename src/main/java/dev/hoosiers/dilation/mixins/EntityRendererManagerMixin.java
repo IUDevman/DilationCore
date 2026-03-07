@@ -28,11 +28,11 @@ public final class EntityRendererManagerMixin implements Globals {
     //Set to tail or else the mob texture draws over the box.
     @Inject(method = "renderEntityWithPosYaw", at = @At("TAIL"))
     public <T extends Entity> void renderEntityWithPosYaw(T entity, double x, double y, double z, float yaw, float deltaTicks, boolean render_shadows, CallbackInfo ci) {
-        DilationCore dilationCore = this.getDilationCore();
-
-        if (dilationCore.failsNullCheck()) {
+        if (this.failsNullCheck()) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         if (!dilationCore$shouldRenderESP(entity)) {
             return;

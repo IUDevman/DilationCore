@@ -19,11 +19,11 @@ public final class EntityPlayerSPMixin implements Globals {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     public void sendChatMessage(String arg1, CallbackInfo ci) {
-        DilationCore dilationCore = this.getDilationCore();
-
-        if (dilationCore.failsNullCheck() || arg1 == null || this.getWorld().isRemote) {
+        if (this.failsNullCheck() || arg1 == null || this.getWorld().isRemote) {
             return;
         }
+
+        DilationCore dilationCore = this.getDilationCore();
 
         boolean cancelPacket = ChatMessages.handleCommandChatMessage(dilationCore, arg1);
 
