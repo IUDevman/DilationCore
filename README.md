@@ -14,7 +14,9 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 - NoExhaustion: Disables ReIndev's sprint timer. Works on Multiplayer.
 - NoFall: Take no fall damage. Recommended when flight is enabled. Also works on multiplayer.
 - NoWeather: Self explanatory.
-- Tracers: Draws a cyan tracer to nearby players. Skidded partially from [qe7/Osiris](https://github.com/qe7/Osiris).
+- Tracers: Draws a cyan tracer to nearby players and nether portals (-t portals). Skidded partially from [qe7/Osiris](https://github.com/qe7/Osiris).
+- TorchNuker: Automatically breaks torchers within a specified range of the player. Lights out.
+- Velocity: Disables blocks, fluids, entities, and explosions from pushing the player.
 - Xray: Only renders desirable blocks such as ores. Also turns on fullbright, Has secret command "-xdo" to only show diamonds.
 
 **Toggles:**

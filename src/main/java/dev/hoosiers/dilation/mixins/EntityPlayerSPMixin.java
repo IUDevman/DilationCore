@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * @author Hoosiers
@@ -30,5 +31,21 @@ public final class EntityPlayerSPMixin implements Globals {
         if (cancelPacket) {
             ci.cancel();
         }
+    }
+
+    //Velocity - pushed by blocks
+    @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
+    public void pushOutofBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        DilationCore dilationCore = this.getDilationCore();
+
+        if (!dilationCore.shouldVelocity()) {
+            return;
+        }
+
+        cir.setReturnValue(false);
     }
 }

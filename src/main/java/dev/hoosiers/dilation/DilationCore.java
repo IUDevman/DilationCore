@@ -55,7 +55,7 @@ public final class DilationCore extends Mod implements Globals {
     }
 
     //mod version
-    private final String version = "d0.4.0";
+    private final String version = "r0.4.0";
 
     public String getVersion() {
         return this.version;
@@ -73,6 +73,7 @@ public final class DilationCore extends Mod implements Globals {
     private boolean shouldNoWeather = false;
     private boolean shouldTracers = false;
     private boolean shouldTorchNuker = false;
+    private boolean shouldVelocity = false;
     private boolean shouldXray = false;
 
     public boolean shouldESP() {
@@ -117,6 +118,10 @@ public final class DilationCore extends Mod implements Globals {
 
     public boolean shouldTorchNuker() {
         return this.shouldTorchNuker;
+    }
+
+    public boolean shouldVelocity() {
+        return this.shouldVelocity;
     }
 
     public boolean shouldXray() {
@@ -178,6 +183,11 @@ public final class DilationCore extends Mod implements Globals {
     public void toggleTorchNuker() {
         this.shouldTorchNuker = !this.shouldTorchNuker();
         ChatMessages.sendChatToggleMessage(this, "TorchNuker", this.shouldTorchNuker());
+    }
+
+    public void toggleVelocity() {
+        this.shouldVelocity = !this.shouldVelocity();
+        ChatMessages.sendChatToggleMessage(this, "Velocity", this.shouldVelocity());
     }
 
     public void toggleXray() {
@@ -369,6 +379,7 @@ public final class DilationCore extends Mod implements Globals {
     public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
     public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
     public final KeyBinding keyBindingTorchNuker = new KeyBinding("key.torchNuker", Keyboard.KEY_U);
+    public final KeyBinding keyBindingVelocity = new KeyBinding("key.velocity", Keyboard.KEY_I);
     public final KeyBinding keyBindingXray = new KeyBinding("key.xray", Keyboard.KEY_X);
     public final KeyBinding keyBindingPageLeft = new KeyBinding("key.pageLeft", Keyboard.KEY_LEFT);
     public final KeyBinding keyBindingPageRight = new KeyBinding("key.pageRight", Keyboard.KEY_RIGHT);
@@ -592,69 +603,74 @@ public final class DilationCore extends Mod implements Globals {
     private void triggerModuleFromKey() {
 
         //EntityESP
-        if (keyBindingESP.isPressed()) {
+        if (this.keyBindingESP.isPressed()) {
             this.toggleESP();
         }
 
         //Fastbreak
-        if (keyBindingFastBreak.isPressed()) {
+        if (this.keyBindingFastBreak.isPressed()) {
             this.toggleFastBreak();
         }
 
         //Fullbright
-        if (keyBindingFullbright.isPressed()) {
+        if (this.keyBindingFullbright.isPressed()) {
             this.toggleFullbright();
         }
 
         //NoFall
-        if (keyBindingNoFall.isPressed()) {
+        if (this.keyBindingNoFall.isPressed()) {
             this.toggleNoFall();
         }
 
         //NoExhaustion
-        if (keyBindingNoExhaustion.isPressed()) {
+        if (this.keyBindingNoExhaustion.isPressed()) {
             this.toggleNoExhaustion();
         }
 
         //Jesus
-        if (keyBindingJesus.isPressed()) {
+        if (this.keyBindingJesus.isPressed()) {
             this.toggleJesus();
         }
 
         //KillAura
-        if (keyBindingKillAura.isPressed()) {
+        if (this.keyBindingKillAura.isPressed()) {
             this.toggleKillAura();
         }
 
         //flight ~~~ ReinDev already has F bound to fog.
-        if (keyBindingFly.isPressed()) {
+        if (this.keyBindingFly.isPressed()) {
             this.toggleFly();
         }
 
         //NoWeather
-        if (keyBindingNoWeather.isPressed()) {
+        if (this.keyBindingNoWeather.isPressed()) {
             this.toggleNoWeather();
         }
 
         //Tracers
-        if (keyBindingTracers.isPressed()) {
+        if (this.keyBindingTracers.isPressed()) {
             this.toggleTracers();
         }
 
         //TorchNuker
-        if (keyBindingTorchNuker.isPressed()) {
+        if (this.keyBindingTorchNuker.isPressed()) {
             this.toggleTorchNuker();
         }
 
+        //Velocity
+        if (this.keyBindingVelocity.isPressed()) {
+            this.toggleVelocity();
+        }
+
         //Xray
-        if (keyBindingXray.isPressed()) {
+        if (this.keyBindingXray.isPressed()) {
             this.toggleXray();
         }
 
         //GUI Page
-        if (keyBindingPageLeft.isPressed()) {
+        if (this.keyBindingPageLeft.isPressed()) {
             this.setGuiPage(this.getGuiPage() - 1);
-        } else if (keyBindingPageRight.isPressed()) {
+        } else if (this.keyBindingPageRight.isPressed()) {
             this.setGuiPage(this.getGuiPage() + 1);
         }
     }
@@ -753,6 +769,10 @@ public final class DilationCore extends Mod implements Globals {
                         this.setTorchNukerRange(Integer.parseInt(entry1));
                     }
 
+                    if (entry0.equals("Velocity") && Boolean.parseBoolean(entry1)) {
+                        this.toggleVelocity();
+                    }
+
                     if (entry0.equals("Xray") && Boolean.parseBoolean(entry1)) {
                         this.toggleXray();
                     }
@@ -806,6 +826,7 @@ public final class DilationCore extends Mod implements Globals {
             printWriter.println("PortalsT:" + this.shouldTracersPortals());
             printWriter.println("TorchNuker:" + this.shouldTorchNuker());
             printWriter.println("RangeTN:" + this.getTorchNukerRange());
+            printWriter.println("Velocity:" + this.shouldVelocity());
             printWriter.println("Xray:" + this.shouldXray());
             printWriter.println("DiamondsOnlyX:" + this.isDiamondsOnly());
             printWriter.println("GUIPage:" + this.getGuiPage());

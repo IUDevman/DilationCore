@@ -87,6 +87,11 @@ public final class ChatMessages {
             return true;
         }
 
+        if (message.equals("-velocity") || message.equals("-v") || message.equals("-antiknockback")) {
+            dilationCore.toggleVelocity();
+            return true;
+        }
+
         if (message.equals("-xray") || message.equals("-x")) {
             dilationCore.toggleXray();
             return true;

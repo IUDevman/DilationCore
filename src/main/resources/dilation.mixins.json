@@ -6,6 +6,7 @@
   "mixins": [
     "BlockFluidMixin",
     "ChunkMixin",
+    "EntityMixin",
     "EntityPlayerMixin",
     "EntityPlayerSPMixin",
     "EntityRendererManagerMixin",

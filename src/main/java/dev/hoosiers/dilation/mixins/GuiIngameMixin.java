@@ -72,19 +72,20 @@ public final class GuiIngameMixin implements Globals {
 
         if (dilationCore.getGuiPage() == 3) {
             this.getGuiIngame().drawString(this.getFontRenderer(), "> TorchNuker (-tn) [U]", minX + 2, minY + 14, dilationCore.shouldTorchNuker() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), ">> Xray (-x) [X]", minX + 2, minY + 24, dilationCore.shouldXray() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Module MSGs)", minX + 2, minY + 34, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-f [speed] (3-20)", minX + 2, minY + 44, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [range] (0-10)", minX + 2, minY + 54, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), ">> Velocity (-v) [I]", minX + 2, minY + 24, dilationCore.shouldVelocity() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "> Xray (-x) [X]", minX + 2, minY + 34, dilationCore.shouldXray() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Module MSGs)", minX + 2, minY + 44, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-f [speed] (3-20)", minX + 2, minY + 54, Color.CYAN.getRGB());
 
             pageString = "(3/4)";
         }
 
         if (dilationCore.getGuiPage() == 4) {
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 14, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-t portals (Tracer Portals)", minX + 2, minY + 24, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-tn [range] (1-10)", minX + 2, minY + 34, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-xdo (Xray Diamonds Only)", minX + 2, minY + 44, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [range] (0-10)", minX + 2, minY + 14, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 24, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-t portals (Tracer Portals)", minX + 2, minY + 34, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-tn [range] (1-10)", minX + 2, minY + 44, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-xdo (Xray Diamonds Only)", minX + 2, minY + 54, Color.CYAN.getRGB());
 
             pageString = "(4/4)";
         }
