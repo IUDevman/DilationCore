@@ -18,6 +18,7 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 - TorchNuker: Automatically breaks torchers within a specified range of the player. Lights out.
 - Velocity: Disables blocks, fluids, entities, and explosions from pushing the player.
 - Xray: Only renders desirable blocks such as ores. Also turns on fullbright, Has secret command "-xdo" to only show diamonds.
+- Coordinates: Is shown below the HUD for both overworld and nether.
 
 **Toggles:**
 - See on player hud for commands (ex: "-x") and keybinds (ex: [X]). Not currently changeable, but they don't interfere with any ReIndev keybinds. Commands do not work on singleplayer.
@@ -26,6 +27,6 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 
 **Images:**
 
-<img width="2560" height="1440" alt="R1" src="https://github.com/user-attachments/assets/22932dd4-1580-4ed8-9921-067d2c318c2e" />
+<img width="2560" height="1440" alt="S1" src="https://github.com/user-attachments/assets/5dc9e3c8-36a7-429c-96a6-2ad0538bc679" />
 
-<img width="2560" height="1440" alt="R2" src="https://github.com/user-attachments/assets/fd5bd966-34d8-4360-889e-3684d1e6387a" />
+<img width="2560" height="1440" alt="S2" src="https://github.com/user-attachments/assets/6b43aa7e-2251-48b4-8474-4c4be7fb8572" />
