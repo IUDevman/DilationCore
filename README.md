@@ -1,4 +1,4 @@
-# First public release [(DOWNLOAD)](https://github.com/IUDevman/DilationCore/releases/download/r0.3.1/DilationCore-r0.3.1.jar). All features work on multiplayer. :)
+# First public release [(DOWNLOAD)](https://github.com/IUDevman/DilationCore/releases/download/r0.4.0/DilationCore-r0.4.0.jar). All features work on multiplayer. :)
 
 Don't @ me with any cope about how the client is shit. The features work good and I don't care about writing a client base.
 
