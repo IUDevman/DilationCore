@@ -183,6 +183,11 @@ public final class DilationCore extends Mod implements Globals {
 
     public void toggleSneak() {
         this.shouldSneak = !this.shouldSneak();
+
+        if (!this.shouldSneak() && !this.failsNullCheck() && this.getWorld().isRemote) {
+            this.sendPacket(new Packet19EntityAction(this.getPlayer(), 2));
+        }
+
         ChatMessages.sendChatToggleMessage(this, "Sneak", this.shouldSneak());
     }
 
