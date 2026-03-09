@@ -48,7 +48,7 @@ public final class GuiIngameMixin implements Globals {
 
         this.getGuiIngame().drawString(this.getFontRenderer(), dilationCoreMessage, 2, 2, textColor);
 
-        String pageString = "";
+        String pageString = "(" + dilationCore.getGuiPage() + "/" + dilationCore.getMaxGuiPage() + ")";
 
         if (dilationCore.getGuiPage() == 1) {
             this.getGuiIngame().drawString(this.getFontRenderer(), "> ESP (-e) [M]", minX +  2, minY + 14, dilationCore.shouldESP() ? Color.GREEN.getRGB() : Color.RED.getRGB());
@@ -56,8 +56,6 @@ public final class GuiIngameMixin implements Globals {
             this.getGuiIngame().drawString(this.getFontRenderer(), "> Fly (-f) [G]", minX +  2, minY + 34, dilationCore.shouldFly() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), ">> Fullbright (-fb) [B]", minX +  2, minY + 44, dilationCore.shouldFullbright() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), "> Jesus (-j) [J]", minX +  2, minY + 54, dilationCore.shouldJesus() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-
-            pageString = "(1/4)";
         }
 
         if (dilationCore.getGuiPage() == 2) {
@@ -65,30 +63,32 @@ public final class GuiIngameMixin implements Globals {
             this.getGuiIngame().drawString(this.getFontRenderer(), ">> NoExhaustion (-ne) [K]", minX + 2, minY + 24, dilationCore.shouldNoExhaustion() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), "> NoFall (-nf) [L]", minX + 2, minY + 34, dilationCore.shouldNoFall() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), ">> NoWeather (-nw) [N]", minX + 2, minY + 44, dilationCore.shouldNoWeather() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "> Tracers (-t) [COMMA]", minX + 2, minY + 54, dilationCore.shouldTracers() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-
-            pageString = "(2/4)";
+            this.getGuiIngame().drawString(this.getFontRenderer(), "> Sneak (-s) [Z]", minX + 2, minY + 54, dilationCore.shouldSneak() ? Color.GREEN.getRGB() : Color.RED.getRGB());
         }
 
         if (dilationCore.getGuiPage() == 3) {
-            this.getGuiIngame().drawString(this.getFontRenderer(), "> TorchNuker (-tn) [U]", minX + 2, minY + 14, dilationCore.shouldTorchNuker() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), ">> Velocity (-v) [I]", minX + 2, minY + 24, dilationCore.shouldVelocity() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "> Xray (-x) [X]", minX + 2, minY + 34, dilationCore.shouldXray() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Module MSGs)", minX + 2, minY + 44, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-f [speed] (3-20)", minX + 2, minY + 54, Color.CYAN.getRGB());
-
-            pageString = "(3/4)";
+            this.getGuiIngame().drawString(this.getFontRenderer(), "> Tracers (-t) [COMMA]", minX + 2, minY + 14, dilationCore.shouldTracers() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), ">> TorchNuker (-tn) [U]", minX + 2, minY + 24, dilationCore.shouldTorchNuker() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "> Velocity (-v) [I]", minX + 2, minY + 34, dilationCore.shouldVelocity() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), ">> Xray (-x) [X]", minX + 2, minY + 44, dilationCore.shouldXray() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Module MSGs)", minX + 2, minY + 54, Color.CYAN.getRGB());
         }
 
         if (dilationCore.getGuiPage() == 4) {
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [range] (0-10)", minX + 2, minY + 14, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 24, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-t portals (Tracer Portals)", minX + 2, minY + 34, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-tn [range] (1-10)", minX + 2, minY + 44, Color.CYAN.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-xdo (Xray Diamonds Only)", minX + 2, minY + 54, Color.CYAN.getRGB());
-
-            pageString = "(4/4)";
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-f [speed] (3-20)", minX + 2, minY + 14, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [range] (0-10)", minX + 2, minY + 24, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-ka [p/h/a] (Pas/Hos/Ani)", minX + 2, minY + 34, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-t portals (Tracer Portals)", minX + 2, minY + 44, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-tn [range] (1-10)", minX + 2, minY + 54, Color.CYAN.getRGB());
         }
+
+        if (dilationCore.getGuiPage() == 5) {
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-xdo (Xray Diamonds Only)", minX + 2, minY + 14, Color.CYAN.getRGB());
+        }
+
+        /**
+         * @todo: Sneak
+         */
 
         int pageX =this.getFontRenderer().getStringWidth(dilationCoreMessage) - this.getFontRenderer().getStringWidth(pageString);
         this.getGuiIngame().drawString(this.getFontRenderer(), pageString, pageX + 2, maxY - 9, textColor);

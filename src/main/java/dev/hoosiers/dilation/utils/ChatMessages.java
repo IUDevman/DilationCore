@@ -97,6 +97,11 @@ public final class ChatMessages {
             return true;
         }
 
+        if (message.equals("-sneak") ||  message.equals("-s")) {
+            dilationCore.toggleSneak();
+            return true;
+        }
+
         //put this last as it has statements that can override fullbright.
         String[] messages = message.split(" ");
 

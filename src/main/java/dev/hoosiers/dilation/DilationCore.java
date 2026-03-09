@@ -14,6 +14,7 @@ import net.minecraft.common.entity.animals.EntityAnimal;
 import net.minecraft.common.entity.monsters.EntityMonster;
 import net.minecraft.common.entity.monsters.EntitySlime;
 import net.minecraft.common.networking.Packet14BlockDig;
+import net.minecraft.common.networking.Packet19EntityAction;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -55,7 +56,7 @@ public final class DilationCore extends Mod implements Globals {
     }
 
     //mod version
-    private final String version = "r0.4.0";
+    private final String version = "d0.5.0";
 
     public String getVersion() {
         return this.version;
@@ -71,6 +72,7 @@ public final class DilationCore extends Mod implements Globals {
     private boolean shouldNoExhaustion = false;
     private boolean shouldNoFall = false;
     private boolean shouldNoWeather = false;
+    private boolean shouldSneak = false;
     private boolean shouldTracers = false;
     private boolean shouldTorchNuker = false;
     private boolean shouldVelocity = false;
@@ -110,6 +112,10 @@ public final class DilationCore extends Mod implements Globals {
 
     public boolean shouldNoWeather() {
         return this.shouldNoWeather;
+    }
+
+    public boolean shouldSneak() {
+        return this.shouldSneak;
     }
 
     public boolean shouldTracers() {
@@ -173,6 +179,11 @@ public final class DilationCore extends Mod implements Globals {
     public void toggleNoWeather() {
         this.shouldNoWeather = !this.shouldNoWeather();
         ChatMessages.sendChatToggleMessage(this, "NoWeather", this.shouldNoWeather());
+    }
+
+    public void toggleSneak() {
+        this.shouldSneak = !this.shouldSneak();
+        ChatMessages.sendChatToggleMessage(this, "Sneak", this.shouldSneak());
     }
 
     public void toggleTracers() {
@@ -349,9 +360,14 @@ public final class DilationCore extends Mod implements Globals {
     //Pages for gui... it's getting pretty long
     //4 pages for now
     private int guiPage = 1;
+    private int maxGuiPage = 5;
 
     public int getGuiPage() {
         return this.guiPage;
+    }
+
+    public int getMaxGuiPage() {
+        return this.maxGuiPage;
     }
 
     public void setGuiPage(int newGuiPage) {
@@ -359,8 +375,8 @@ public final class DilationCore extends Mod implements Globals {
             newGuiPage = 1;
         }
 
-        if (newGuiPage > 4) {
-            newGuiPage = 4;
+        if (newGuiPage > this.getMaxGuiPage()) {
+            newGuiPage = this.getMaxGuiPage();
         }
 
         this.guiPage = newGuiPage;
@@ -377,6 +393,7 @@ public final class DilationCore extends Mod implements Globals {
     public final KeyBinding keyBindingKillAura = new KeyBinding("key.killAura", Keyboard.KEY_R);
     public final KeyBinding keyBindingFullbright = new KeyBinding("key.fullbright", Keyboard.KEY_B);
     public final KeyBinding keyBindingNoWeather = new KeyBinding("key.noWeather", Keyboard.KEY_N);
+    public final KeyBinding keyBindingSneak = new KeyBinding("key.sneak", Keyboard.KEY_Z);
     public final KeyBinding keyBindingTracers = new KeyBinding("key.tracers", Keyboard.KEY_COMMA);
     public final KeyBinding keyBindingTorchNuker = new KeyBinding("key.torchNuker", Keyboard.KEY_U);
     public final KeyBinding keyBindingVelocity = new KeyBinding("key.velocity", Keyboard.KEY_I);
@@ -397,6 +414,11 @@ public final class DilationCore extends Mod implements Globals {
         //No fall
         if (this.shouldNoFall()) {
             this.getPlayer().fallDistance = 0;
+        }
+
+        //Sneak
+        if (this.shouldSneak() && this.getWorld().isRemote) {
+            this.sendPacket(new Packet19EntityAction(this.getPlayer(), 1));
         }
 
         //Flight
@@ -647,6 +669,11 @@ public final class DilationCore extends Mod implements Globals {
             this.toggleNoWeather();
         }
 
+        //Sneak
+        if (this.keyBindingSneak.isPressed()) {
+            this.toggleSneak();
+        }
+
         //Tracers
         if (this.keyBindingTracers.isPressed()) {
             this.toggleTracers();
@@ -729,6 +756,10 @@ public final class DilationCore extends Mod implements Globals {
                         this.toggleKillAura();
                     }
 
+                    if (entry0.equals("RangeKA")) {
+                        this.setAuraRange(Integer.parseInt(entry1));
+                    }
+
                     if (entry0.equals("PlayersKA")) {
                         this.setAttackPlayers(Boolean.parseBoolean(entry1));
                     }
@@ -751,6 +782,10 @@ public final class DilationCore extends Mod implements Globals {
 
                     if (entry0.equals("NoWeather") && Boolean.parseBoolean(entry1)) {
                         this.toggleNoWeather();
+                    }
+
+                    if (entry0.equals("Sneak") && Boolean.parseBoolean(entry1)) {
+                        this.toggleSneak();
                     }
 
                     if (entry0.equals("Tracers") && Boolean.parseBoolean(entry1)) {
@@ -816,12 +851,14 @@ public final class DilationCore extends Mod implements Globals {
             printWriter.println("FullBright:" + this.shouldFullbright());
             printWriter.println("Jesus:" + this.shouldJesus());
             printWriter.println("KillAura:" + this.shouldKillAura());
+            printWriter.println("RangeKA:" + this.getAuraRange());
             printWriter.println("PlayersKA:" + this.shouldAttackPlayers());
             printWriter.println("HostilesKA:" + this.shouldAttackHostiles());
             printWriter.println("AnimalsKA:" + this.shouldAttackAnimals());
             printWriter.println("NoExhaustion:" + this.shouldNoExhaustion());
             printWriter.println("NoFall:" + this.shouldNoFall());
             printWriter.println("NoWeather:" + this.shouldNoWeather());
+            printWriter.println("Sneak:" + this.shouldSneak());
             printWriter.println("Tracers:" + this.shouldTracers());
             printWriter.println("PortalsT:" + this.shouldTracersPortals());
             printWriter.println("TorchNuker:" + this.shouldTorchNuker());
