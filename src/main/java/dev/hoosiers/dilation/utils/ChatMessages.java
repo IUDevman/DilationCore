@@ -25,9 +25,9 @@ public final class ChatMessages {
         String message = "";
 
         if (enabled) {
-            message = clientPrefix + " Module " + module + " §aEnabled§f!";
+            message = clientPrefix + " Hack " + module + " §aEnabled§f!";
         } else {
-            message = clientPrefix + " Module " + module + " §cDisabled§f!";
+            message = clientPrefix + " Hack " + module + " §cDisabled§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
@@ -225,9 +225,9 @@ public final class ChatMessages {
         String message = "";
 
         if (toggleMessages) {
-            message = clientPrefix + " Set Module Toggle Messages To §aTrue§f!";
+            message = clientPrefix + " Set Hack Toggle Messages To §aTrue§f!";
         } else {
-            message = clientPrefix + " Set Module Toggle Messages To §cFalse§f!";
+            message = clientPrefix + " Set Hack Toggle Messages To §cFalse§f!";
         }
 
         Minecraft.getInstance().thePlayer.addChatMessage(message);
