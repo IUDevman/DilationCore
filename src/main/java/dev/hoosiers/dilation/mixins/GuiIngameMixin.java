@@ -86,10 +86,6 @@ public final class GuiIngameMixin implements Globals {
             this.getGuiIngame().drawString(this.getFontRenderer(), "-xdo (Xray Diamonds Only)", minX + 2, minY + 14, Color.CYAN.getRGB());
         }
 
-        /**
-         * @todo: Sneak
-         */
-
         int pageX =this.getFontRenderer().getStringWidth(dilationCoreMessage) - this.getFontRenderer().getStringWidth(pageString);
         this.getGuiIngame().drawString(this.getFontRenderer(), pageString, pageX + 2, maxY - 9, textColor);
 
