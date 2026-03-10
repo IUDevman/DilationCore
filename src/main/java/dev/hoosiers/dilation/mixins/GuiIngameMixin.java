@@ -71,7 +71,7 @@ public final class GuiIngameMixin implements Globals {
             this.getGuiIngame().drawString(this.getFontRenderer(), ">> TorchNuker (-tn) [U]", minX + 2, minY + 24, dilationCore.shouldTorchNuker() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), "> Velocity (-v) [I]", minX + 2, minY + 34, dilationCore.shouldVelocity() ? Color.GREEN.getRGB() : Color.RED.getRGB());
             this.getGuiIngame().drawString(this.getFontRenderer(), ">> Xray (-x) [X]", minX + 2, minY + 44, dilationCore.shouldXray() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Module MSGs)", minX + 2, minY + 54, Color.CYAN.getRGB());
+            this.getGuiIngame().drawString(this.getFontRenderer(), "-tm (Toggle Hack MSGs)", minX + 2, minY + 54, Color.CYAN.getRGB());
         }
 
         if (dilationCore.getGuiPage() == 4) {
