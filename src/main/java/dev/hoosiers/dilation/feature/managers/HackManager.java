@@ -28,6 +28,7 @@ public final class HackManager implements Manager {
         logger.info(this::name);
 
         this.HACKS.add(new Commands());
+        this.HACKS.add(new Coordinates());
         this.HACKS.add(new ESP());
         this.HACKS.add(new FastBreak());
         this.HACKS.add(new Fly());

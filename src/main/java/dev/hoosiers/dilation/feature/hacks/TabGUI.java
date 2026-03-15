@@ -55,20 +55,18 @@ public final class TabGUI extends Hack {
         }
     }
 
-    private final String dilationCoreMessage = DilationCore.MOD_NAME + " " + DilationCore.MOD_VERSION +  " >>> By Hoosiers :)";
+    public final String dilationCoreMessage = DilationCore.MOD_NAME + " " + DilationCore.MOD_VERSION +  " >>> By Hoosiers :)";
 
-    private final int minX = 0;
-    private final int maxX = this.getFontRenderer().getStringWidth(dilationCoreMessage) + 3;
-    private final int minY = 0;
-    private final int maxY = 65;
+    public final int minX = 0;
+    public final int maxX = this.getFontRenderer().getStringWidth(dilationCoreMessage) + 3;
+    public final int minY = 0;
+    public final int maxY = 65;
 
     @SuppressWarnings("unused")
     @EventTarget
     public void onDrawGuiScreenEvent(DrawGuiScreenEvent drawGuiScreenEvent) {
 
         this.renderTabGui(this.minX, this.maxX, this.minY, this.maxY);
-
-        this.renderCoordinates(this.maxX, this.maxY);
     }
 
     private final int outlineColor = new Color(255, 255, 0, 240).getRGB();
@@ -87,7 +85,6 @@ public final class TabGUI extends Hack {
         ArrayList<TabGUIEntry> tabGUIEntries = new ArrayList<>();
 
         tabGUIEntries.add(new TabGUIEntry("[" + this.getCommandManager().PREFIX + "Commands] List", Color.CYAN));
-        tabGUIEntries.add(new TabGUIEntry("Test", Color.WHITE));
 
         this.getHackManager().HACKS.forEach(hack -> {
 
@@ -132,28 +129,5 @@ public final class TabGUI extends Hack {
         }
 
         return false;
-    }
-
-    private void renderCoordinates(int maxX, int maxY) {
-        int posX = (int) this.getPlayer().posX;
-        int posY = (int) this.getPlayer().posY - 1; //Why?
-        int posZ = (int) this.getPlayer().posZ;
-
-        if (this.getWorld().worldProvider.isHellWorld) {
-            posX *= 8;
-            posZ *= 8;
-        }
-
-        this.getGuiIngame().drawCenteredString(this.getFontRenderer(), getCoordsString(posX, posY, posZ, false), (float) maxX / 2, maxY + 2, Color.WHITE.getRGB());
-        this.getGuiIngame().drawCenteredString(this.getFontRenderer(), getCoordsString(posX, posY, posZ, true), (float) maxX / 2, maxY + 12, Color.RED.getRGB());
-    }
-
-    private String getCoordsString(int x, int y, int z, boolean nether) {
-        if (nether) {
-            x /= 8;
-            z /= 8;
-        }
-
-        return "(" + x + ", " + y + ", " + z + ")";
     }
 }
