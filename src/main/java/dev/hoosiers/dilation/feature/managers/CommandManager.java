@@ -37,6 +37,7 @@ public final class CommandManager implements Manager {
         this.COMMANDS.add(new Prefix());
         this.COMMANDS.add(new Set());
         this.COMMANDS.add(new Settings());
+        this.COMMANDS.add(new Spammer());
         this.COMMANDS.add(new Toggle());
     }
 

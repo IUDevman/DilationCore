@@ -7,6 +7,7 @@ import dev.hoosiers.dilation.imp.Category;
 import dev.hoosiers.dilation.imp.Hack;
 import dev.hoosiers.dilation.imp.TileEntityDummy;
 import dev.hoosiers.dilation.imp.event.EventTarget;
+import dev.hoosiers.dilation.imp.settings.BooleanSetting;
 import net.minecraft.client.player.EntityClientPlayerMP;
 import net.minecraft.client.player.EntityOtherPlayerMP;
 import net.minecraft.client.renderer.world.Tessellator;
@@ -35,6 +36,15 @@ import java.awt.*;
 
 public final class ESP extends Hack {
 
+    public final BooleanSetting players = new BooleanSetting("Players", true);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
+    public final BooleanSetting animals = new BooleanSetting("Animals", true);
+    public final BooleanSetting items = new BooleanSetting("Items", true);
+    public final BooleanSetting miscEntities = new BooleanSetting("Misc Entities", true);
+    public final BooleanSetting containers = new BooleanSetting("Containers", true);
+    public final BooleanSetting portals = new BooleanSetting("Portals", true);
+    public final BooleanSetting miscTileEntities = new BooleanSetting("Misc Tile Entities", true);
+
     public ESP() {
         super("ESP", Category.Render, Keyboard.KEY_M, false, true, true);
     }
@@ -53,27 +63,50 @@ public final class ESP extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onRenderTileEntityEvent(RenderTileEntityEvent renderTileEntityEvent) {
-        this.renderBoundingBoxFromCoordsForTileEntity(renderTileEntityEvent.tileEntity, renderTileEntityEvent.x, renderTileEntityEvent.y, renderTileEntityEvent.z);
+        if (this.shouldRenderESP(renderTileEntityEvent.tileEntity)) {
+            this.renderBoundingBoxFromCoordsForTileEntity(renderTileEntityEvent.tileEntity, renderTileEntityEvent.x, renderTileEntityEvent.y, renderTileEntityEvent.z);
+        }
     }
 
     private boolean shouldRenderESP(Entity entity) {
-        if (entity instanceof EntityAreaEffectCloud) {
+        if (entity instanceof EntityAreaEffectCloud || entity instanceof EntityClientPlayerMP || !entity.isEntityAlive() || entity.ticksExisted <= 2) {
             return false;
         }
 
-        if (entity instanceof EntityClientPlayerMP) {
-            return false;
+        if (entity instanceof EntityOtherPlayerMP) {
+            return this.players.getValue();
         }
 
-        if (!entity.isEntityAlive()) {
-            return false;
+        if (entity instanceof EntityAnimal) {
+            return this.animals.getValue();
         }
 
-        if (entity.ticksExisted <= 2) {
-            return false;
+        if (entity instanceof EntityMonster || entity instanceof EntitySlime) {
+            return this.hostiles.getValue();
         }
 
-        return true;
+        if (entity instanceof EntityWyvern || entity instanceof EntityBloodWyvern || entity instanceof EntityFireballWyvern) {
+            return this.hostiles.getValue();
+        }
+
+        if (entity instanceof EntityItem || entity instanceof EntityItemFireResistant) {
+            return this.items.getValue();
+        }
+
+        return this.miscEntities.getValue();
+    }
+
+    private boolean shouldRenderESP(TileEntity tileEntity) {
+
+        if (tileEntity instanceof TileEntityChest || tileEntity instanceof TileEntityCrate || (tileEntity instanceof TileEntityDummy && ((TileEntityDummy) tileEntity).getBlockID() != Blocks.PORTAL.blockID) || tileEntity instanceof TileEntityDrawer) {
+            return this.containers.getValue();
+        }
+
+        if ((tileEntity instanceof TileEntityDummy && ((TileEntityDummy) tileEntity).getBlockID() == Blocks.PORTAL.blockID)) {
+            return this.portals.getValue();
+        }
+
+        return this.miscTileEntities.getValue();
     }
 
     private <T extends Entity> void renderBoundingBoxFromCoordsForEntity(T entity, double x, double y, double z) {

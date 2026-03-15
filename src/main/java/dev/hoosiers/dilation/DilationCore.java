@@ -77,8 +77,3 @@ public final class DilationCore extends Mod implements LinkedMethods {
         return manager;
     }
 }
-
-/**
- * todo:
- * Config
- */

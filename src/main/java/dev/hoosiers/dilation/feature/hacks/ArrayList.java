@@ -4,6 +4,8 @@ import dev.hoosiers.dilation.backend.events.DrawGuiScreenEvent;
 import dev.hoosiers.dilation.imp.Category;
 import dev.hoosiers.dilation.imp.Hack;
 import dev.hoosiers.dilation.imp.event.EventTarget;
+import dev.hoosiers.dilation.imp.settings.BooleanSetting;
+import dev.hoosiers.dilation.imp.settings.ColorSetting;
 import dev.hoosiers.dilation.imp.settings.EnumSetting;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
@@ -18,6 +20,8 @@ import java.awt.*;
 public final class ArrayList extends Hack {
 
     public EnumSetting direction = new EnumSetting("Direction", Direction.Right);
+    public BooleanSetting uniformColor = new BooleanSetting("Uniform Color", false);
+    public ColorSetting colorIfUniform = new ColorSetting("Color", Color.YELLOW);
 
     public ArrayList() {
         super("ArrayList", Category.Client, Keyboard.KEY_P, true, false, true);
@@ -59,6 +63,10 @@ public final class ArrayList extends Hack {
     }
 
     private Color getHackColorFromCategory(Category category) {
+        if (this.uniformColor.getValue()) {
+            return this.colorIfUniform.getValue();
+        }
+
         switch (category)  {
             case Client:
                 return Color.GREEN;
