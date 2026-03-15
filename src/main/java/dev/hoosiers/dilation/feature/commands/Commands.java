@@ -32,7 +32,7 @@ public final class Commands implements Command {
     @Override
     public void onCommand(String[] args) {
 
-        this.sendClientMessageWithPrefix("§nList of Commands:");
+        this.sendClientMessageWithPrefix("List of Commands [§b" + this.getCommandManager().COMMANDS.size() + "§f]:");
 
         this.getCommandManager().COMMANDS.forEach(command -> {
             String commandMessage = command.name() + ": " + command.description();

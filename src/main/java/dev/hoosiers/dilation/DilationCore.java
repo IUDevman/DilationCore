@@ -80,8 +80,5 @@ public final class DilationCore extends Mod implements LinkedMethods {
 
 /**
  * todo:
- *
- * settings list
  * Config
- * ArrayList
  */

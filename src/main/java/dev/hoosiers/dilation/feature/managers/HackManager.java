@@ -27,6 +27,7 @@ public final class HackManager implements Manager {
     public void load(Logger logger) {
         logger.info(this::name);
 
+        this.HACKS.add(new dev.hoosiers.dilation.feature.hacks.ArrayList());
         this.HACKS.add(new Commands());
         this.HACKS.add(new Coordinates());
         this.HACKS.add(new ESP());
