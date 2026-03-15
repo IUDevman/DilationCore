@@ -89,7 +89,7 @@ public final class TabGUI extends Hack {
         this.getHackManager().HACKS.forEach(hack -> {
 
             if (!this.shouldIgnoreHack(hack.NAME)) {
-                tabGUIEntries.add(new TabGUIEntry(hack.NAME + " [" + hack.getBind().keyCode + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
+                tabGUIEntries.add(new TabGUIEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.getBind().keyCode) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
             }
         });
 

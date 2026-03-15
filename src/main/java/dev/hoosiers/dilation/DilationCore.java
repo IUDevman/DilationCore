@@ -85,5 +85,4 @@ public final class DilationCore extends Mod implements LinkedMethods {
  * Module list command (with settings list)
  * Config
  * ArrayList
- * FIGURE OUT HOW THE FUCK TO CONVERT STRINGS INTO KEY INTS AND KEY INTS INTO STRINGS (FOR GUI AND BIND COMMAND)
  */

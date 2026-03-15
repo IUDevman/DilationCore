@@ -65,7 +65,20 @@ public final class Bind implements Command {
             return;
         }
 
-        //todo: find a way to find int from key string
+        int bind = Keyboard.getKeyIndex(newBind.toUpperCase());
+
+        if (bind != Keyboard.KEY_NONE) {
+
+            Hack alreadyBoundHack = this.getHackManager().HACKS.stream().filter(hack2 -> hack2.getBind().keyCode == bind).findFirst().orElse(null);
+
+            if (alreadyBoundHack != null) {
+                this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to apply bind to hack (key already bound to " + alreadyBoundHack.NAME + ")!");
+                return;
+            }
+        }
+
+        hack.setBind(bind);
+        this.sendClientMessageWithPrefix("Hack:" + " " + hack.NAME + " bind set to [§b" + Keyboard.getKeyName(hack.getBind().keyCode)+ "§f]!!");
 
     }
 }
