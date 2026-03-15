@@ -1,7 +1,6 @@
 package dev.hoosiers.dilation.feature.managers;
 
 import dev.hoosiers.dilation.feature.commands.*;
-import dev.hoosiers.dilation.feature.hacks.Commands;
 import dev.hoosiers.dilation.imp.Command;
 import dev.hoosiers.dilation.imp.Manager;
 
@@ -31,7 +30,7 @@ public final class CommandManager implements Manager {
         logger.info(this::name);
 
         this.COMMANDS.add(new Bind());
-        this.COMMANDS.add(new CommandsList());
+        this.COMMANDS.add(new Commands());
         this.COMMANDS.add(new Drawn());
         this.COMMANDS.add(new Messages());
         this.COMMANDS.add(new Prefix());
@@ -50,7 +49,7 @@ public final class CommandManager implements Manager {
         }
 
         if (commandMessage == this.PREFIX) {
-            if (this.getHackManager().getHack(Commands.class).isEnabled()) {
+            if (this.getHackManager().getHack(dev.hoosiers.dilation.feature.hacks.Commands.class).isEnabled()) {
                 this.sendClientMessageWithPrefix("§c" + this.name() + ": Unknown command!");
             }
 
@@ -61,7 +60,7 @@ public final class CommandManager implements Manager {
 
             AtomicBoolean hasDispatchedMessage = new AtomicBoolean(false);
 
-            if (this.getHackManager().getHack(Commands.class).isEnabled()) {
+            if (this.getHackManager().getHack(dev.hoosiers.dilation.feature.hacks.Commands.class).isEnabled()) {
 
                 this.COMMANDS.forEach(command -> Arrays.stream(command.aliases()).forEach(alias -> {
                     if (commandMessage.equalsIgnoreCase(this.PREFIX + alias)) {

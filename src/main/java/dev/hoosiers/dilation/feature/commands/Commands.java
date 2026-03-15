@@ -7,19 +7,20 @@ import dev.hoosiers.dilation.imp.Command;
  * @since 03-10-2026
  */
 
-public final class CommandsList implements Command {
+public final class Commands implements Command {
 
     @Override
     public String name() {
-        return "CommandsList";
+        return "Commands";
     }
 
     @Override
     public String[] aliases() {
         return new String[]{
                 this.name(),
+                "CommandsList",
                 "CommandList",
-                "Commands"
+                "Command"
         };
     }
 
