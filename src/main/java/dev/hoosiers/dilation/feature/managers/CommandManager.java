@@ -32,6 +32,7 @@ public final class CommandManager implements Manager {
         this.COMMANDS.add(new Bind());
         this.COMMANDS.add(new Commands());
         this.COMMANDS.add(new Drawn());
+        this.COMMANDS.add(new Hacks());
         this.COMMANDS.add(new Messages());
         this.COMMANDS.add(new Prefix());
         this.COMMANDS.add(new ToggleHack());

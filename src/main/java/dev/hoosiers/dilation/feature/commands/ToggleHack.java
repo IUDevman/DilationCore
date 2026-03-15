@@ -49,6 +49,12 @@ public class ToggleHack implements Command {
         Hack hack = this.getHackManager().getHack(hackName);
 
         if (hack != null) {
+
+            if (hack.NAME.equalsIgnoreCase("Commands")) {
+                this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to toggle Commands hack (cannot execute)!");
+                return;
+            }
+
             hack.toggle();
             return;
         }
