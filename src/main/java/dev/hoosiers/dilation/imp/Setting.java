@@ -5,7 +5,7 @@ package dev.hoosiers.dilation.imp;
  * @since 03-03-2026
  */
 
-public interface Setting<T> {
+public interface Setting<T> extends LinkedMethods {
 
     String getName();
 

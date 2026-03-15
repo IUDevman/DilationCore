@@ -19,7 +19,16 @@ import java.util.ArrayList;
 
 public final class Xray extends Hack {
 
-    public final BooleanSetting diamondsOnly = new BooleanSetting("DiamondsOnly", false);
+    public final BooleanSetting diamondsOnly = new BooleanSetting("DiamondsOnly", false){
+        @Override
+        public void setValue(Boolean value) {
+            super.setValue(value);
+
+            if (this.getHackManager().getHack(Xray.class).isEnabled()) {
+                this.resetWorldRenders();
+            }
+        }
+    };
 
     public Xray() {
         super("Xray", Category.Render, Keyboard.KEY_X, false, true, true);
