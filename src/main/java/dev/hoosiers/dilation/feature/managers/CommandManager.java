@@ -35,7 +35,8 @@ public final class CommandManager implements Manager {
         this.COMMANDS.add(new Hacks());
         this.COMMANDS.add(new Messages());
         this.COMMANDS.add(new Prefix());
-        this.COMMANDS.add(new ToggleHack());
+        this.COMMANDS.add(new Set());
+        this.COMMANDS.add(new Toggle());
     }
 
     public boolean dispatchCommands(String args) {

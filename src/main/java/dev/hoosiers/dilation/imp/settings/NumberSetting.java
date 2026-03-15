@@ -42,15 +42,7 @@ public class NumberSetting implements Setting<Double> {
 
     @Override
     public void setValue(Double value) {
-        if (value < this.getMin()) {
-            value = this.getMin();
-        }
-
-        if (value > this.getMax()) {
-            value = this.getMax();
-        }
-
-        this.value = Double.parseDouble(String.format("%." + this.getDecimal() + "f", value));
+        this.value = value;
     }
 
     public double getMin() {

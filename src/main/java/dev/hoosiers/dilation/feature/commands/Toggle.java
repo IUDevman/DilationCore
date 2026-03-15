@@ -8,11 +8,11 @@ import dev.hoosiers.dilation.imp.Hack;
  * @since 03-10-2026
  */
 
-public class ToggleHack implements Command {
+public class Toggle implements Command {
 
     @Override
     public String name() {
-        return "ToggleHack";
+        return "Toggle";
     }
 
     @Override
@@ -20,7 +20,7 @@ public class ToggleHack implements Command {
         return new String[]{
                 this.name(),
                 "ToggleHacks",
-                "toggle",
+                "ToggleHack",
                 "enable",
                 "disable"
         };
@@ -42,7 +42,7 @@ public class ToggleHack implements Command {
         String hackName = args[1];
 
         if (hackName == null) {
-            this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to toggle hack (no name inputted)!");
+            this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to toggle hack (hack not found)!");
             return;
         }
 
