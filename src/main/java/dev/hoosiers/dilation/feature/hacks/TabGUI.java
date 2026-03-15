@@ -122,9 +122,11 @@ public final class TabGUI extends Hack {
     }
 
     private boolean shouldIgnoreHack(String name) {
-        if (name == "Commands") {
+        if (name.equals("Commands")) {
             return true;
-        } else if (name == "TabGUI") {
+        } else if (name.equals("TabGUI")) {
+            return true;
+        } else if (name.equals("CommandPreview")) {
             return true;
         }
 

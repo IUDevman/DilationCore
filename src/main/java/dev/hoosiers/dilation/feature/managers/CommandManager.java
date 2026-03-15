@@ -41,6 +41,10 @@ public final class CommandManager implements Manager {
         this.COMMANDS.add(new Toggle());
     }
 
+    public Command getCommand(String name) {
+        return this.COMMANDS.stream().filter(command -> command.name().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
     public boolean dispatchCommands(String args) {
 
         String[] message = args.split(" ");
