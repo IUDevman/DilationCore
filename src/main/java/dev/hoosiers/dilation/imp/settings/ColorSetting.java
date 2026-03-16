@@ -9,7 +9,6 @@ import java.awt.*;
  * @since 03-03-2026
  */
 
-//Not used yet but adding just in case
 public class ColorSetting implements Setting<Color> {
 
     private final String name;

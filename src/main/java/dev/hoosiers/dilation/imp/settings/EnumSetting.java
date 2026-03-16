@@ -7,7 +7,6 @@ import dev.hoosiers.dilation.imp.Setting;
  * @since 03-03-2026
  */
 
-//Not used yet but adding just in case
 public class EnumSetting implements Setting<Enum<?>> {
 
     private final String name;
