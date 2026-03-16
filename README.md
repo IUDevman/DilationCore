@@ -18,15 +18,16 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 - NoFall: Take no fall damage. Recommended when flight is enabled. Also works on multiplayer.
 - NoWeather: Self explanatory.
 - Sneak: Keeps your player sneaked when in multiplayer servers.
+- Spammer: Spams a message the indicated amount of times (usage: -spammer [number] message_with_underscores).
 - TorchNuker: Automatically breaks torchers within a specified range of the player. Lights out.
 - Tracers: Draws a cyan tracer to nearby players and nether portals (-set tracers portals true/false). Skidded partially from [qe7/Osiris](https://github.com/qe7/Osiris).
 - Velocity: Disables blocks, fluids, entities, and explosions from pushing the player.
 - Xray: Only renders desirable blocks such as ores. Also turns on fullbright, Has secret command "-xdo" to only show diamonds.
 
 **Toggles:**
-- See on player hud for default keybinds (ex: [X]). Change hack binds with -bind hack key.
+- See on TabGUI for default keybinds (ex: [X]). Change hack binds with -bind hack key.
 - Enable/disable hack toggle messages with -message hack.
-- Use the left and right arrow keys to page through the HUD.
+- Use the left and right arrow keys to page through the TabGUI.
 - See the full list of hacks with -Hacks, full list of commands with -Commands, and full list of hack settings with -Settings.
 - Default command prefix is "-". Change with -prefix char.
 
