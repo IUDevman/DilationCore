@@ -35,7 +35,7 @@ public final class Set implements Command {
 
     @Override
     public String description() {
-        return "[hack] [setting_name] [value] (r_g_b for color settings); Changes setting values.";
+        return "[HACK] [SETTING_NAME] [VALUE] (r_g_b for color settings); Changes setting values.";
     }
 
     @Override

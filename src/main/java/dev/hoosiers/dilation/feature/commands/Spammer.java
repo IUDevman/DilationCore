@@ -25,7 +25,7 @@ public final class Spammer implements Command {
 
     @Override
     public String description() {
-        return "[INT AMOUNT] [spam_message]; Spams the desired method into chat for the number of times.";
+        return "[INT_AMOUNT] [spam_message]; Spams the desired method into chat for the number of times.";
     }
 
     @Override

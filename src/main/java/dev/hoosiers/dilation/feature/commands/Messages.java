@@ -27,7 +27,7 @@ public final class Messages implements Command {
 
     @Override
     public String description() {
-        return "[Module]; Toggles if a message will be sent in chat when a module is toggled.";
+        return "[HACK]; Toggles if a message will be sent in chat when a hack is toggled.";
     }
 
     @Override

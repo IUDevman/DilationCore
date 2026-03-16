@@ -28,7 +28,7 @@ public final class Drawn implements Command {
 
     @Override
     public String description() {
-        return "[Module]; Toggles if a module name will be drawn in the ArrayList.";
+        return "[HACK]; Toggles if a hack name will be drawn in the ArrayList.";
     }
 
     @Override

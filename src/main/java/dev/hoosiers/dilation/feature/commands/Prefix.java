@@ -24,7 +24,7 @@ public final class Prefix implements Command {
 
     @Override
     public String description() {
-        return "[New Prefix]; Sets command prefix. Current: [§b" + this.getCommandManager().PREFIX + "§f].";
+        return "[CHAR]; Sets command prefix. Current: [§b" + this.getCommandManager().PREFIX + "§f].";
     }
 
     @Override
