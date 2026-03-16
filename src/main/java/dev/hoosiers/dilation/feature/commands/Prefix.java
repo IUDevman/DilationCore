@@ -47,6 +47,11 @@ public final class Prefix implements Command {
             return;
         }
 
+        if (newPrefix.equalsIgnoreCase("") || newPrefix.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to apply command prefix (invalid)!");
+            return;
+        }
+
         this.getCommandManager().PREFIX = newPrefix.toLowerCase();
         this.sendClientMessageWithPrefix("Set command prefix to [§b" + newPrefix.toLowerCase() + "§f].");
     }
