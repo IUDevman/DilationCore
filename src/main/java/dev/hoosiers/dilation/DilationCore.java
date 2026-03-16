@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public final class DilationCore extends Mod implements LinkedMethods {
 
     public static String MOD_NAME = "DilationCore";
-    public static String MOD_VERSION = "r0.5.0";
+    public static String MOD_VERSION = "d0.5.1";
 
     private static DilationCore INSTANCE;
     public Logger LOGGER;
