@@ -26,7 +26,7 @@ public interface LinkedMethods {
     }
 
     default World getWorld() {
-        return getMinecraft().theWorld;
+        return this.getMinecraft().theWorld;
     }
 
     default EntityPlayerSP getPlayer() {
@@ -71,7 +71,7 @@ public interface LinkedMethods {
     }
 
     default void sendPacket(Packet packet) {
-        getMinecraft().getSendQueue().addToSendQueue(packet);
+        this.getMinecraft().getSendQueue().addToSendQueue(packet);
     }
 
     default DilationCore getDilationCore() {

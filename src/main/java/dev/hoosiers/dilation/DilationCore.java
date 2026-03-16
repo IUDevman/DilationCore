@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Hoosiers
- * @since 03-10-2026
+ * @since 02-20-2026
  */
 
 public final class DilationCore extends Mod implements LinkedMethods {
