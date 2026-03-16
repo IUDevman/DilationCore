@@ -96,7 +96,7 @@ public final class Set implements Command {
             BooleanSetting booleanSetting = (BooleanSetting) setting;
 
             booleanSetting.setValue(Boolean.parseBoolean(value));
-            this.sendClientMessageWithPrefix("Hack:" + " Setting '" + setting.getName() + "' (" + hack.NAME + ") boolean value set to " + (booleanSetting.getValue() ? "§a" : "§c") + booleanSetting.getValue() + "§f!");
+            this.sendClientMessageWithPrefix("Hack: '" + hack.NAME +  "' Setting: '" + setting.getName() + "' boolean value set to " + (booleanSetting.getValue() ? "§a" : "§c") + booleanSetting.getValue() + "§f!");
 
         } else if (setting instanceof NumberSetting) {
             try {
@@ -110,7 +110,7 @@ public final class Set implements Command {
                 NumberSetting numberSetting = (NumberSetting) setting;
 
                 numberSetting.setValue(Double.parseDouble(decimalFix));
-                this.sendClientMessageWithPrefix("Hack:" + " Setting '" + numberSetting.getName() + "' (" + hack.NAME + ") number value set to §b" + numberSetting.getValue() + "§f!");
+                this.sendClientMessageWithPrefix("Hack: '" + hack.NAME +  "' Setting: '" + setting.getName() + "' number value set to §b" + numberSetting.getValue() + "§f!");
 
 
             } catch (NumberFormatException ignored) {
@@ -129,7 +129,7 @@ public final class Set implements Command {
                     EnumSetting enumSetting = (EnumSetting) setting;
 
                     enumSetting.setValue(anEnum);
-                    this.sendClientMessageWithPrefix("Hack:" + " Setting '" + enumSetting.getName() + "' (" + hack.NAME + ") enum value set to §b" + enumSetting.getValue() + "§f!");
+                    this.sendClientMessageWithPrefix("Hack: '" + hack.NAME +  "' Setting: '" + setting.getName() + "' enum value set to §b" + enumSetting.getValue() + "§f!");
                 }
             });
 
@@ -152,7 +152,7 @@ public final class Set implements Command {
                 ColorSetting colorSetting = (ColorSetting) setting;
 
                 colorSetting.setValue(new Color(red, green, blue));
-                this.sendClientMessageWithPrefix("Hack:" + " Setting '" + colorSetting.getName() + "' (" + hack.NAME + ") color set to §b" + colorSetting.getValue().toString().replace("java.awt.Color", "") + "§f!");
+                this.sendClientMessageWithPrefix("Hack: '" + hack.NAME +  "' Setting: '" + setting.getName() + "' color set to §b" + colorSetting.getValue().toString().replace("java.awt.Color", "") + "§f!");
 
             } catch (NumberFormatException ignored) {
                 this.sendClientMessageWithPrefix("§c" + this.name() + ": Failed to change setting '" + setting.getName() + "' (" + hack.NAME + ") (invalid color)!");

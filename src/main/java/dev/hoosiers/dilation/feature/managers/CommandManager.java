@@ -30,6 +30,7 @@ public final class CommandManager implements Manager {
         logger.info(this::name);
 
         this.COMMANDS.add(new Bind());
+        this.COMMANDS.add(new ClearChat());
         this.COMMANDS.add(new Commands());
         this.COMMANDS.add(new Drawn());
         this.COMMANDS.add(new Hacks());
