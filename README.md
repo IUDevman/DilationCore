@@ -32,6 +32,6 @@ Note: This client is for the ReIndev version 2.9_03 [(Discord)](https://discord.
 
 **Images:**
 
-<img width="2560" height="1440" alt="S1" src="" />
+<img width="2560" height="1440" alt="2026-03-15_20 28 54" src="https://github.com/user-attachments/assets/abf6fe1d-f0dc-4dd4-adbb-81b23b1e63de" />
 
-<img width="2560" height="1440" alt="S2" src="" />
+<img width="2560" height="1440" alt="2026-03-15_20 29 16" src="https://github.com/user-attachments/assets/6efb8b09-be06-47a5-ada7-0e9446fca109" />
