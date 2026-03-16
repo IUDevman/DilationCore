@@ -19,6 +19,7 @@ import java.util.Comparator;
 public final class TorchNuker extends Hack {
 
     public final NumberSetting range = new NumberSetting("Range", 5, 1, 10, 0);
+    public final NumberSetting delay = new NumberSetting("Delay", 3, 0, 20, 0);
 
     public TorchNuker() {
         super("TorchNuker", Category.Render, Keyboard.KEY_U, false, true, true);
@@ -34,7 +35,7 @@ public final class TorchNuker extends Hack {
     @Override
     public void onTick() {
 
-        if (this.torchNukerDelay < 5) {
+        if (this.delay.getValue() != 0 && this.torchNukerDelay < this.delay.getValue()) {
             torchNukerDelay++;
             return;
         }
