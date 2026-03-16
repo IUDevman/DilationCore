@@ -98,7 +98,7 @@ public final class ESP extends Hack {
 
     private boolean shouldRenderESP(TileEntity tileEntity) {
 
-        if (tileEntity instanceof TileEntityChest || tileEntity instanceof TileEntityCrate || (tileEntity instanceof TileEntityDummy && ((TileEntityDummy) tileEntity).getBlockID() != Blocks.PORTAL.blockID) || tileEntity instanceof TileEntityDrawer) {
+        if (tileEntity instanceof TileEntityChest || tileEntity instanceof TileEntityCrate || (tileEntity instanceof TileEntityDummy && ((TileEntityDummy) tileEntity).getBlockID() == Blocks.DIMENSIONAL_CHEST.blockID) || tileEntity instanceof TileEntityDrawer) {
             return this.containers.getValue();
         }
 
