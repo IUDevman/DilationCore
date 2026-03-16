@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = World.class, priority = 6969)
 public final class WorldMixin implements LinkedMethods {
 
-    //renders entity brightness
     @Inject(method = "getLightBrightness", at = @At("HEAD"), cancellable = true)
     public void getLightBrightness(int x, int y, int z, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {

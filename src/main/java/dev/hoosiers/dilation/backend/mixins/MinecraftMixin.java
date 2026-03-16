@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Minecraft.class, priority = 6969)
 public final class MinecraftMixin implements LinkedMethods {
 
-    //runs main tick method in DilationCore
     @Inject(method = "runTick", at = @At("TAIL"))
     public void runTick(CallbackInfo ci) {
         if (this.failsNullCheck()) {
