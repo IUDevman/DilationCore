@@ -35,6 +35,7 @@ public final class HackManager implements Manager {
         this.HACKS.add(new FastBreak());
         this.HACKS.add(new Fly());
         this.HACKS.add(new Fullbright());
+        this.HACKS.add(new Gassy());
         this.HACKS.add(new Jesus());
         this.HACKS.add(new KillAura());
         this.HACKS.add(new NoExhaustion());
