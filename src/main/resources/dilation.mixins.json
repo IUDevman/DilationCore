@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.hoosiers.dilation.mixins",
+  "package": "dev.hoosiers.dilation.backend.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BlockFluidMixin",
@@ -11,6 +11,7 @@
     "EntityPlayerSPMixin",
     "EntityRendererManagerMixin",
     "EntityRendererMixin",
+    "GuiChatMixin",
     "GuiIngameMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
