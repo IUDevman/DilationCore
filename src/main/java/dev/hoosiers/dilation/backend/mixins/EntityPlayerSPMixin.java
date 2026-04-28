@@ -1,9 +1,11 @@
 package dev.hoosiers.dilation.backend.mixins;
 
 import dev.hoosiers.dilation.backend.events.MovementToPlayerEvent;
+import dev.hoosiers.dilation.backend.events.SignEvent;
 import dev.hoosiers.dilation.feature.managers.CommandManager;
 import dev.hoosiers.dilation.imp.LinkedMethods;
 import net.minecraft.client.player.EntityPlayerSP;
+import net.minecraft.common.block.tileentity.TileEntitySign;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,6 +46,24 @@ public final class EntityPlayerSPMixin implements LinkedMethods {
 
         if (movementToPlayerEvent.isCancelled()) {
             cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "displayGUIEditSign", at = @At("HEAD"), cancellable = true)
+    public void displayGUIEditSign(TileEntitySign sign, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (sign == null) {
+            return;
+        }
+
+        SignEvent signEvent = new SignEvent(sign);
+        this.getEventHandler().call(signEvent);
+
+        if (signEvent.isCancelled()) {
+            ci.cancel();
         }
     }
 }
