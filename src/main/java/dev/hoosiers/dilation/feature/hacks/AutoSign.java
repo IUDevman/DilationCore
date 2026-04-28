@@ -7,6 +7,11 @@ import dev.hoosiers.dilation.imp.event.EventTarget;
 import net.minecraft.common.networking.Packet130UpdateSign;
 import org.lwjgl.input.Keyboard;
 
+/**
+ * @author Hoosiers
+ * @since 04-28-2026
+ */
+
 public final class AutoSign extends Hack {
 
     public AutoSign() {
